@@ -1,8 +1,9 @@
 import Link from "next/link";
 
+import { MobileNav } from "@/components/mobile-nav";
 import { Reticle } from "@/components/reticle";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { navLinks, site } from "@/lib/site";
+import { navLinks, site, socials } from "@/lib/site";
 
 /**
  * Sticky top navigation. Section jump-links are added in Phase 2 — this is the
@@ -37,6 +38,7 @@ export function SiteNav() {
             ))}
           </ul>
           <ThemeToggle />
+          <MobileNav links={navLinks} socials={socials} />
         </div>
       </nav>
     </header>

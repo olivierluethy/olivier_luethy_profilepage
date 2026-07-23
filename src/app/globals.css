@@ -11,6 +11,12 @@
 
    `signal`     — graphic/accent use: rules, glyphs, large display type.
    `signal-ink` — the same accent tuned per theme to clear AA as small text.
+
+   `muted` and `faint` are both measured against their theme's ground *and*
+   panel, because `faint` carries real content (dates, counts, captions) at
+   11px and so needs 4.5:1, not the 3:1 large-text allowance. Lightening these
+   further breaks AA — the tiers are separated by size and letter-spacing as
+   well as colour, so there is no need to push them.
 --------------------------------------------------------------------------- */
 
 :root {
@@ -21,7 +27,7 @@
   --line-strong: #b8c4d0;
   --text: #0b0f14;
   --muted: #55677a;
-  --faint: #8a9aab;
+  --faint: #637384;
   --signal: #e07b2c;
   --signal-ink: #9c4a07;
   --signal-wash: rgba(224, 123, 44, 0.1);
@@ -36,7 +42,7 @@
   --line-strong: #2e3d4e;
   --text: #e6edf3;
   --muted: #8a9aab;
-  --faint: #5a6878;
+  --faint: #748292;
   --signal: #ff8a3d;
   --signal-ink: #ff8a3d;
   --signal-wash: rgba(255, 138, 61, 0.12);
