@@ -5,6 +5,7 @@ import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 
 import { mdxComponents } from "@/components/mdx/mdx-components";
+import { remarkUnwrapImages } from "@/lib/mdx/remark-unwrap-images";
 
 /**
  * Dual-theme highlighting. Shiki emits `--shiki-light`/`--shiki-dark` custom
@@ -45,7 +46,7 @@ export function MdxContent({ source }: MdxContentProps) {
         components={mdxComponents}
         options={{
           mdxOptions: {
-            remarkPlugins: [remarkGfm],
+            remarkPlugins: [remarkGfm, remarkUnwrapImages],
             rehypePlugins: [
               rehypeSlug,
               [rehypePrettyCode, prettyCodeOptions],
