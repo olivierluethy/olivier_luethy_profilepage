@@ -1,40 +1,37 @@
-import { Reticle } from "@/components/reticle";
-import { site } from "@/lib/site";
+import { SectionNav } from "@/components/section-nav";
+import { AllProjects } from "@/components/sections/all-projects";
+import { Community } from "@/components/sections/community";
+import { ContactCta } from "@/components/sections/contact-cta";
+import { Experience } from "@/components/sections/experience";
+import { FeaturedProjects } from "@/components/sections/featured-projects";
+import { Hackathons } from "@/components/sections/hackathons";
+import { Hero } from "@/components/sections/hero";
+import { LatestPosts } from "@/components/sections/latest-posts";
+import { Maker } from "@/components/sections/maker";
+import { Sports } from "@/components/sections/sports";
 
 /**
- * Placeholder home page. Replaced by the full single-scroll layout in Phase 2 —
- * for now it exercises the type scale and colour tokens in both themes.
+ * Single-scroll homepage.
+ *
+ * Section order is deliberate: shipped work sits directly under the hero,
+ * because that is the argument the whole site is making. Everything after it
+ * is supporting evidence. The order here must match `homeSections`, which
+ * drives the jump-nav rail.
  */
 export default function Home() {
   return (
-    <section className="mx-auto flex max-w-6xl flex-col justify-center px-5 py-24 sm:px-8 sm:py-32">
-      <p className="flex items-center gap-2.5 font-mono text-hud uppercase text-signal-ink">
-        <Reticle className="size-4" />
-        Phase 0 — scaffold
-      </p>
-
-      <h1 className="mt-6 max-w-4xl text-balance font-display text-display-xl font-bold">
-        {site.name}
-      </h1>
-
-      <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted">
-        {site.tagline}
-      </p>
-
-      <div className="mt-12 grid max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-4">
-        {[
-          { label: "Ground", className: "bg-ground" },
-          { label: "Panel", className: "bg-panel" },
-          { label: "Raised", className: "bg-panel-raised" },
-          { label: "Signal", className: "bg-signal" },
-        ].map((swatch) => (
-          <div key={swatch.label} className={`${swatch.className} p-4`}>
-            <span className="font-mono text-hud uppercase text-muted">
-              {swatch.label}
-            </span>
-          </div>
-        ))}
-      </div>
-    </section>
+    <>
+      <SectionNav />
+      <Hero />
+      <FeaturedProjects />
+      <AllProjects />
+      <Experience />
+      <Hackathons />
+      <Maker />
+      <Sports />
+      <Community />
+      <LatestPosts />
+      <ContactCta />
+    </>
   );
 }

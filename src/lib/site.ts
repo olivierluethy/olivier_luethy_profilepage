@@ -28,9 +28,14 @@ export const site = {
   url: "https://example.com",
   locale: "en_US",
   email: "[[you@example.com]]",
-  /** Place the file at /public/[[resume.pdf]] and update this path. */
-  resumeUrl: "/[[resume.pdf]]",
-  profileImage: "[[/images/profile.jpg]]",
+  /**
+   * Asset paths resolve to real placeholder files so nothing renders broken.
+   * Overwrite the files in /public rather than changing these paths:
+   *   /public/resume.pdf        — your CV
+   *   /public/images/profile.jpg — your photo
+   */
+  resumeUrl: "/resume.pdf",
+  profileImage: "/images/profile.jpg",
   /** Falls back to the site name if you would rather not show a location. */
   location: "[[Switzerland]]",
   jobTitle: "[[Software Engineer]]",
@@ -39,6 +44,16 @@ export const site = {
 export const socials: readonly SocialLink[] = [
   { label: "GitHub", href: "[[https://github.com/yourhandle]]", external: true },
   { label: "LinkedIn", href: "[[https://linkedin.com/in/yourhandle]]", external: true },
+] as const;
+
+/**
+ * The three readouts in the hero's bottom rail. Keep them to things a
+ * recruiter can verify elsewhere on the page — they are evidence, not slogans.
+ */
+export const heroStats: readonly { value: string; label: string }[] = [
+  { value: "[[3]]", label: "Apps shipped" },
+  { value: "[[2]]", label: "Hackathons won" },
+  { value: "[[1st]]", label: "Paid app at [[19]]" },
 ] as const;
 
 /** Top-level routes in the nav. In-page section links are added in Phase 2. */

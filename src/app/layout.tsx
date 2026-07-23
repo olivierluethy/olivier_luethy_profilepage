@@ -44,9 +44,14 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${plexSans.variable} ${jetbrainsMono.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-ground text-text">
+        {/*
+          Follows the visitor's OS preference. Both themes are designed, so
+          there is no reason to override it — change defaultTheme to "dark"
+          to force the dark art direction for everyone.
+        */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >

@@ -89,6 +89,13 @@
 
   /* Height of the sticky nav — anchors offset by this so jump-nav lands clean. */
   --spacing-nav: 3.5rem;
+
+  /*
+   * The width at which the fixed section rail clears the 72rem content column
+   * without overlapping it. Below this the jump-nav becomes a sticky strip.
+   * Not a stock breakpoint because the constraint is the layout, not a device.
+   */
+  --breakpoint-rail: 85rem;
 }
 
 @layer base {

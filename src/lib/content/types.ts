@@ -58,8 +58,17 @@ export interface ProjectComputed {
   endedAt: number;
 }
 
-export interface Project extends ProjectComputed {
+/**
+ * A project without its MDX body.
+ *
+ * Client components (the filterable project list) take this shape so the raw
+ * MDX never has to be serialised into the browser payload.
+ */
+export interface ProjectSummary extends ProjectComputed {
   frontmatter: ProjectFrontmatter;
+}
+
+export interface Project extends ProjectSummary {
   /** Raw MDX body, compiled at render time. */
   body: string;
 }

@@ -14,7 +14,12 @@ import {
   requireOneOf,
   requireString,
 } from "@/lib/content/frontmatter";
-import type { Project, ProjectFrontmatter, ProjectStatus } from "@/lib/content/types";
+import type {
+  Project,
+  ProjectFrontmatter,
+  ProjectStatus,
+  ProjectSummary,
+} from "@/lib/content/types";
 
 const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
 const STATUSES: readonly ProjectStatus[] = ["active", "archived"];
@@ -52,8 +57,25 @@ function parseProject(fileName: string): Project {
     isOngoing: endDate === "",
     dateRange: formatRange(startDate, endDate),
     startedAt: toTimestamp(startDate),
-    endedAt: endDate ? toTimestamp(endDate) : Number.POSITIVE_INFINITY,
+    // MAX_SAFE_INTEGER rather than Infinity: this value crosses the server /
+    // client boundary for the filter UI, and Infinity does not survive
+    // serialisation.
+    endedAt: endDate ? toTimestamp(endDate) : Number.MAX_SAFE_INTEGER,
   };
+}
+
+/**
+ * Drops the MDX body so a project can be handed to a client component without
+ * serialising the whole write-up into the browser payload.
+ */
+export function toSummary({
+  frontmatter,
+  isOngoing,
+  dateRange,
+  startedAt,
+  endedAt,
+}: Project): ProjectSummary {
+  return { frontmatter, isOngoing, dateRange, startedAt, endedAt };
 }
 
 /** All projects, newest start date first. Cached per render pass. */
