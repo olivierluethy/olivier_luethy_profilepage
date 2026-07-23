@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 
+import { Diagram } from "@/components/mdx/diagram";
 import { MdxImage } from "@/components/mdx/mdx-image";
 import { getImageSize } from "@/lib/image-size";
 
@@ -199,4 +200,6 @@ export const mdxComponents = {
   code: Code,
   pre: Pre,
   img: MdxImg,
+  /** Available in MDX without an import: <Diagram src="..." alt="..." /> */
+  Diagram,
 };

@@ -35,7 +35,19 @@ The fix was to move the decoder into Rust compiled to WebAssembly, run it inside
 a Web Worker, and stream results back in chunks so the first chart paints while
 the rest of the file is still decoding.
 
-![How a log moves from file to chart, entirely on the client.](/images/projects/blackbox-lab-architecture.png "Architecture — everything stays on-device")
+<Diagram
+  src="/images/projects/blackbox-lab-architecture.png"
+  alt="A log file moves from the file picker into a Web Worker, is decoded by a Rust WebAssembly module, and streams chunks back to the Canvas renderer. Nothing leaves the browser."
+  caption="Architecture — everything stays on-device"
+/>
+
+{/*
+  Diagram accepts either an export or a raw diagrams.net file:
+    <Diagram src="/diagrams/architecture.drawio.svg" alt="..." />   ← preferred
+    <Diagram src="/diagrams/architecture.drawio" alt="..." />       ← viewer iframe
+  The raw form is fetched by viewer.diagrams.net over the network, so it needs
+  `site.url` set to the deployed origin and will not resolve on localhost.
+*/}
 
 ```ts showLineNumbers
 // The worker streams decoded frames back in chunks rather than resolving once
