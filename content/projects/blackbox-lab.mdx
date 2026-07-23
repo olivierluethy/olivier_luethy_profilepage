@@ -1,0 +1,99 @@
+---
+title: "Blackbox Lab"
+slug: "blackbox-lab"
+summary: "Browser-based flight log analyser for FPV drones. Drop a blackbox file in, get your tuning answer out."
+role: "Solo developer — parser, visualisation, hosting"
+status: "active"
+startDate: "2025-09"
+endDate: ""
+techStack: ["TypeScript", "React", "WebAssembly", "Rust", "Canvas API"]
+interfaces: ["Betaflight Blackbox", "Web Workers", "File System Access API"]
+aiModels: []
+liveUrl: "[[https://blackbox-lab.example.com]]"
+githubUrl: "[[https://github.com/yourhandle/blackbox-lab]]"
+linkedinPostUrl: ""
+coverImage: "/images/projects/blackbox-lab-cover.png"
+featured: true
+tags: ["Web", "FPV", "Performance", "Open Source"]
+---
+
+After a crash, every FPV pilot asks the same question: was that me, or was that
+the quad? The flight controller records the answer — several hundred samples a
+second of gyro, motor output, RC input and battery voltage — but the existing
+desktop tools are slow, and none of them run on a phone at the field.
+
+Blackbox Lab parses those logs in the browser. Nothing is uploaded; the file
+never leaves the device.
+
+## Why this was harder than it looks
+
+A five-minute flight is roughly [[120 MB]] of binary log and about [[600,000]]
+samples across [[40]] fields. Parsing that in JavaScript on the main thread
+freezes the tab for [[20 seconds]] or more.
+
+The fix was to move the decoder into Rust compiled to WebAssembly, run it inside
+a Web Worker, and stream results back in chunks so the first chart paints while
+the rest of the file is still decoding.
+
+![How a log moves from file to chart, entirely on the client.](/images/projects/blackbox-lab-architecture.png "Architecture — everything stays on-device")
+
+```ts showLineNumbers
+// The worker streams decoded frames back in chunks rather than resolving once
+// at the end, so the first chart can paint in well under a second on a file
+// that takes several seconds to decode completely.
+export async function decodeLog(
+  file: File,
+  onChunk: (frames: LogFrame[]) => void,
+): Promise<LogSummary> {
+  const worker = new Worker(new URL("./decoder.worker.ts", import.meta.url), {
+    type: "module",
+  });
+
+  return new Promise((resolve, reject) => {
+    worker.onmessage = ({ data }: MessageEvent<DecoderMessage>) => {
+      if (data.kind === "chunk") onChunk(data.frames);
+      if (data.kind === "done") {
+        worker.terminate();
+        resolve(data.summary);
+      }
+    };
+    worker.onerror = reject;
+    worker.postMessage({ file }, [file as unknown as Transferable]);
+  });
+}
+```
+
+## The measurements that mattered
+
+Rewriting the hot path was only worth it because I measured first. The decoder
+was never the bottleneck I assumed it was — the original version spent most of
+its time allocating objects per sample.
+
+| Stage | Before | After | Change |
+| --- | --- | --- | --- |
+| Time to first chart | [[21.4 s]] | [[0.8 s]] | [[26×]] |
+| Full decode | [[21.4 s]] | [[3.1 s]] | [[7×]] |
+| Peak memory | [[1.9 GB]] | [[240 MB]] | [[8×]] |
+| Works on a phone | No | Yes | — |
+
+![Motor output and gyro traces overlaid on a shared time axis.](/images/projects/blackbox-lab-chart.png "Telemetry view")
+
+Charts are drawn straight to Canvas rather than through a charting library.
+At [[600,000]] points, every library I tried either dropped frames while panning
+or refused to render at all.
+
+## What I learned
+
+- **Profile before rewriting.** My first instinct was the parser. The profiler
+  said allocation. I would have spent a week on the wrong problem.
+- **WebAssembly is not automatically fast.** The naive port was *slower* than
+  the JavaScript it replaced until I removed the per-sample copies across the
+  boundary.
+- **Open source brings real review.** A pull request from a stranger caught a
+  sign error in my gyro scaling that I had been flying with for months.
+
+## Status
+
+Actively maintained and open source. [[Roughly 400]] pilots use it monthly.
+Next up is support for the newer log format and a side-by-side mode for
+comparing two tunes on the same axes.

@@ -1,0 +1,82 @@
+---
+title: "What shipping my first paid app taught me about pricing"
+slug: "shipping-my-first-paid-app"
+date: "2026-06-12"
+summary: "I spent three months building FlickClean and about twenty minutes deciding what to charge for it. That ratio was backwards."
+coverImage: "/images/blog/first-paid-app-cover.png"
+tags: ["Monetization", "iOS", "Lessons"]
+relatedProjects: ["flickclean"]
+---
+
+I spent three months building [FlickClean](/projects/flickclean) and about
+twenty minutes deciding what to charge for it. In hindsight that ratio was
+completely backwards, and almost everything I got wrong in the first month
+traces back to it.
+
+Here is what I would tell myself before that launch.
+
+## Nobody pays for something they have not felt working
+
+My first build showed the paywall on launch. It converted at [[under 1%]].
+
+The reasoning seemed sound at the time: people who are not willing to pay are
+not worth onboarding. What actually happened is that nobody had any idea what
+they were being asked to pay *for*. A photo cleaner is not a category people
+have strong intuitions about.
+
+Moving the paywall to *after the first completed cleaning session* — once
+someone had watched a few hundred photos disappear and felt the relief of it —
+changed conversion by roughly [[3×]]. The app itself did not change at all.
+
+![Revenue over the first eight weeks. The step is the paywall move, not a marketing push.](/images/blog/first-paid-app-revenue.png "First eight weeks")
+
+## Price is a signal, not just a number
+
+I launched at [[CHF 1.90]] a month because it felt modest and I was nervous.
+
+Raising it to [[CHF 3.90]] barely moved conversion. What it did move was refund
+requests, which went *down*. My read is that the very low price made people
+suspect the app was thin, and they bought it with low expectations that were
+easy to disappoint.
+
+> The cheapest version of your product is not the easiest one to sell. It is
+> the one people trust least.
+
+## Annual plans carry the business
+
+Roughly [[70%]] of revenue comes from annual subscriptions bought by people who
+had been on monthly for less than [[two weeks]]. Once someone has decided the
+tool is useful, they would rather stop thinking about it.
+
+If I had launched monthly-only, I would have concluded the app was not viable.
+
+## Instrument the funnel before you need it
+
+For the first three weeks I had no analytics beyond App Store Connect, which
+told me how many people subscribed and nothing about the ones who did not.
+
+I was making pricing decisions from a total of [[four data points]] and a
+feeling. Every real improvement came after I could see where people stopped.
+
+Concretely, the events worth having from day one:
+
+- App opened, first time versus returning
+- Permission granted or denied
+- First cleaning session started, and completed
+- Paywall shown, dismissed, purchased
+- Subscription cancelled, with how long they stayed
+
+That is five minutes of work before launch and the only reason I could tell the
+paywall move had worked rather than guessing.
+
+## The part that actually mattered
+
+None of the above is really about pricing. It is about the fact that I built for
+three months without ever watching someone use the thing.
+
+The twenty minutes I spent on price were a symptom. I had treated shipping as
+the finish line, when it was the first point at which I could learn anything
+real.
+
+The next project started with the funnel and worked backwards, and it was a
+better project for it.

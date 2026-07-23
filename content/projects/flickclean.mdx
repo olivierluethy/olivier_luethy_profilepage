@@ -1,0 +1,104 @@
+---
+title: "FlickClean: Photo Cleaner"
+slug: "flickclean"
+summary: "iOS app to swipe-clean your camera roll. My first revenue-generating app."
+role: "Solo developer — design, build, App Store publishing, monetization"
+status: "active"
+startDate: "2026-04"
+endDate: ""
+techStack: ["Swift", "SwiftUI", "StoreKit", "Core Data", "Vision"]
+interfaces: ["RevenueCat", "Apple StoreKit", "PhotoKit"]
+aiModels: ["OpenAI GPT-4", "Claude"]
+liveUrl: "[[https://apps.apple.com/app/idXXXXXXXXX]]"
+githubUrl: "[[https://github.com/yourhandle/flickclean]]"
+linkedinPostUrl: "[[https://linkedin.com/posts/yourhandle-flickclean]]"
+coverImage: "/images/projects/flickclean-cover.png"
+featured: true
+tags: ["iOS", "Monetization", "AI"]
+---
+
+Most people have thousands of photos they will never look at again, and no
+patience for a file manager. FlickClean turns clearing your camera roll into
+something closer to a card game: one photo at a time, swipe left to bin it,
+swipe right to keep it. The bin only empties when you confirm it.
+
+It is also the first thing I built that people paid for, which taught me more
+about software than any tutorial had up to that point.
+
+## The problem with existing cleaners
+
+I bought four competitors before writing a line of code. Every one of them had
+the same two failures:
+
+- **They ask for everything up front.** Full library access on first launch, no
+  explanation. Most people tap "Don't Allow" and never come back.
+- **Deletion feels dangerous.** No undo, no staging, no confirmation. If a
+  cleaner ever deletes one photo you cared about, you uninstall it that day.
+
+So the whole design brief became: *earn trust before asking for anything, and
+make every destructive action reversible until the last second.*
+
+![The main swipe interface, with the staging count pinned to the bottom bar.](/images/projects/flickclean-swipe.png "Swipe deck — the core loop")
+
+## How it works
+
+Photos are never deleted directly. A swipe moves an asset into a local staging
+set held in Core Data; nothing leaves the device library until the user taps
+**Empty bin** and clears the system confirmation. That single indirection is
+what makes the app feel safe enough to use quickly.
+
+The heavy lifting is batched so the UI never blocks:
+
+```swift showLineNumbers
+/// Requests deletion for every staged asset in a single system prompt.
+/// PhotoKit shows one confirmation sheet per performChanges block, so
+/// batching here is what keeps the flow from becoming unbearable.
+func emptyBin(_ staged: [PHAsset]) async throws {
+  guard !staged.isEmpty else { return }
+
+  try await PHPhotoLibrary.shared().performChanges {
+    PHAssetChangeRequest.deleteAssets(staged as NSArray)
+  }
+
+  await store.clearStaged()
+  analytics.track(.binEmptied(count: staged.count))
+}
+```
+
+An on-device Vision pass groups near-duplicate bursts so you review ten similar
+shots as one decision instead of ten. That alone cut the median time to clear
+1,000 photos from roughly [[18 minutes]] to [[6 minutes]] in my own testing.
+
+## Monetization
+
+The free tier cleans [[100]] photos a month. Beyond that it is a subscription,
+handled through StoreKit 2 with RevenueCat in front of it so I did not have to
+build receipt validation myself.
+
+| Decision | What I shipped | Why |
+| --- | --- | --- |
+| Paywall timing | After the first successful clean | Asking before the user has felt the value converted far worse |
+| Pricing | [[CHF 3.90]]/month, [[CHF 19]]/year | Annual carries most of the revenue |
+| Free tier | [[100]] photos per month | Generous enough to prove it works |
+| Trial | 3 days, no card required | Reduced refund requests noticeably |
+
+![The paywall, shown only after a completed cleaning session.](/images/projects/flickclean-paywall.png "Paywall — shown after first value")
+
+> Moving the paywall from launch to *after the first completed clean* roughly
+> [[tripled]] conversion. The app did not change. Only the moment I asked did.
+
+## What I would do differently
+
+- **I shipped analytics too late.** For the first three weeks I was guessing at
+  where people dropped off. Instrumenting the funnel should have been part of
+  the first release, not the third.
+- **Core Data was heavier than this needed.** The staging set is a list of
+  identifiers. A plain file would have done the job with a fraction of the code.
+- **I underpriced at launch.** Raising the price [[twice]] changed conversion
+  far less than I feared.
+
+## Status
+
+Actively maintained. Current work is on a shared-album mode so families can
+clear a holiday album together, and on cutting cold-start time on libraries
+above [[50,000]] photos.

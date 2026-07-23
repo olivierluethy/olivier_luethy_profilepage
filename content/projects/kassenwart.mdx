@@ -1,0 +1,94 @@
+---
+title: "Kassenwart"
+slug: "kassenwart"
+summary: "Treasury and membership tool built for a local sports club that was running on a shared spreadsheet."
+role: "Solo developer — requirements, build, rollout, training the volunteers who use it"
+status: "archived"
+startDate: "2024-02"
+endDate: "2025-06"
+techStack: ["TypeScript", "Next.js", "PostgreSQL", "Prisma", "Tailwind CSS"]
+interfaces: ["Swiss QR-bill", "CAMT.053 bank statements", "Postmark"]
+aiModels: []
+liveUrl: ""
+githubUrl: "[[https://github.com/yourhandle/kassenwart]]"
+linkedinPostUrl: "[[https://linkedin.com/posts/yourhandle-kassenwart]]"
+coverImage: "/images/projects/kassenwart-cover.png"
+featured: false
+tags: ["Web", "Community", "Fintech"]
+---
+
+A local club I volunteer for was tracking [[180]] members and their annual dues
+in a spreadsheet that three people edited by hand. Every year the treasurer
+spent an evening cross-referencing bank statements against a members list,
+chasing the ones that did not match.
+
+Kassenwart replaced that evening with about ten minutes.
+
+## Built around one job
+
+The tool does one thing well: it reconciles incoming payments against member
+dues, automatically.
+
+Swiss invoices carry a QR-bill with a structured reference number. Banks export
+statements as CAMT.053 XML, which includes that reference on every transaction.
+Match the two and reconciliation is a lookup rather than a search.
+
+```ts
+/// Matches a bank transaction to an invoice by its structured reference.
+/// Falls back to nothing on purpose — a wrong automatic match is far worse
+/// than asking the treasurer to resolve it by hand.
+export function matchTransaction(
+  tx: BankTransaction,
+  invoices: Map<string, Invoice>,
+): Invoice | null {
+  const reference = normaliseReference(tx.reference);
+  const invoice = invoices.get(reference);
+
+  if (!invoice) return null;
+  if (invoice.amountCents !== tx.amountCents) return null;
+
+  return invoice;
+}
+```
+
+That deliberate refusal to guess turned out to be the most important decision in
+the project. An early version matched on amount plus approximate name, and the
+first partial-payment case assigned money to the wrong family.
+
+![The treasurer's view: who has paid, who has not, what needs a human.](/images/projects/kassenwart-dashboard.png "Reconciliation dashboard")
+
+## Building for non-technical users
+
+The people using this are volunteers, not staff. Several are well past
+retirement age, and the tool had to survive being handed to a new treasurer
+every couple of years.
+
+- **No jargon anywhere.** The interface says "Not yet paid", never "Unreconciled".
+- **Everything reversible.** Every automatic match can be undone with one click.
+- **Printable.** The committee wanted paper for the AGM, so every view prints properly.
+- **One page of documentation.** If it needed more, I treated that as a design bug.
+
+| Before | After |
+| --- | --- |
+| An evening of manual cross-referencing | [[~10 minutes]] |
+| Three people editing one spreadsheet | One tool, one source of truth |
+| Dues chased by hand | Reminders sent automatically |
+
+## Why it is archived
+
+The club merged with a neighbouring one in [[mid-2025]] and moved to the larger
+club's existing platform. I handed over the data, exported everything to CSV,
+and shut the instance down.
+
+That is the honest outcome, and I would rather show it than pretend otherwise.
+It ran in production for [[16 months]], handled [[roughly CHF 40,000]] in dues
+across two billing cycles, and lost nothing.
+
+## What I learned
+
+- **Talk to the actual user, repeatedly.** My first prototype solved the problem
+  I imagined the treasurer had. Watching her work for an hour changed the design.
+- **Refusing to guess is a feature.** The version that matched aggressively was
+  worse than the one that asked for help.
+- **Handover is part of the job.** Because I had planned the export path from the
+  start, shutting it down took an afternoon instead of a crisis.
