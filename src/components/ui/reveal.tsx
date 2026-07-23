@@ -41,6 +41,10 @@ export function Reveal({
 
   return (
     <motion.div
+      // globals.css forces this visible under prefers-reduced-motion, so the
+      // hidden initial state never survives into a reduced-motion render even
+      // before JavaScript has run.
+      data-reveal=""
       className={className}
       initial={{ opacity: 0, y: 24 }}
       {...(trigger === "mount"
