@@ -1,9 +1,18 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Reticle } from "@/components/reticle";
 import { Badge } from "@/components/ui/badge";
 import { getAllPosts } from "@/lib/content/blog";
+import { buildMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Blog",
+  description:
+    "Write-ups on shipping software, monetisation and hardware — mostly things I got wrong first.",
+  path: "/blog",
+});
 
 export default function BlogIndexPage() {
   const posts = getAllPosts();

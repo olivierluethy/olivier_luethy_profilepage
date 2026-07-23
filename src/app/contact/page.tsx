@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
+
 import { Reticle } from "@/components/reticle";
+import { buildMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Contact",
+  description: "Get in touch about work, collaboration or anything on this site.",
+  path: "/contact",
+});
 
 /**
  * Contact page.

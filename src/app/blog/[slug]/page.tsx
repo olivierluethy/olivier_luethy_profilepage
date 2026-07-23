@@ -1,11 +1,15 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/json-ld";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { Badge } from "@/components/ui/badge";
 import { RelatedProjects } from "@/components/ui/related-projects";
 import { getAllPosts, getPostBySlug } from "@/lib/content/blog";
+import { buildMetadata } from "@/lib/metadata";
+import { blogPostingSchema } from "@/lib/schema";
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.frontmatter.slug }));
@@ -13,6 +17,24 @@ export function generateStaticParams() {
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) return { title: "Post not found" };
+
+  return buildMetadata({
+    title: post.frontmatter.title,
+    description: post.frontmatter.summary,
+    path: `/blog/${post.frontmatter.slug}`,
+    type: "article",
+    publishedTime: post.frontmatter.date,
+    tags: post.frontmatter.tags,
+  });
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -25,6 +47,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <article className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-16">
+      <JsonLd data={blogPostingSchema(post)} />
+
       <Link
         href="/blog"
         className="inline-flex items-center gap-2 font-mono text-hud uppercase text-muted transition-colors hover:text-signal-ink"

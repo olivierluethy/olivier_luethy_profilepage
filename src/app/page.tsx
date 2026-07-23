@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+
+import { JsonLd } from "@/components/json-ld";
 import { SectionNav } from "@/components/section-nav";
 import { AllProjects } from "@/components/sections/all-projects";
 import { Community } from "@/components/sections/community";
@@ -9,6 +12,16 @@ import { Hero } from "@/components/sections/hero";
 import { LatestPosts } from "@/components/sections/latest-posts";
 import { Maker } from "@/components/sections/maker";
 import { Sports } from "@/components/sections/sports";
+import { buildMetadata } from "@/lib/metadata";
+import { personSchema } from "@/lib/schema";
+import { site } from "@/lib/site";
+
+export const metadata: Metadata = buildMetadata({
+  title: `${site.name} — ${site.jobTitle}`,
+  description: site.description,
+  path: "/",
+  absoluteTitle: true,
+});
 
 /**
  * Single-scroll homepage.
@@ -21,6 +34,7 @@ import { Sports } from "@/components/sections/sports";
 export default function Home() {
   return (
     <>
+      <JsonLd data={personSchema()} />
       <SectionNav />
       <Hero />
       <FeaturedProjects />

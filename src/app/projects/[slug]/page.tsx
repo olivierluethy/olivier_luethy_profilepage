@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/json-ld";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { ActionLink } from "@/components/ui/action-link";
 import { LivePreview } from "@/components/ui/live-preview";
@@ -13,6 +15,8 @@ import {
   getRelatedProjects,
 } from "@/lib/content/projects";
 import { canEmbed } from "@/lib/can-embed";
+import { buildMetadata } from "@/lib/metadata";
+import { projectSchema } from "@/lib/schema";
 
 export function generateStaticParams() {
   return getAllProjects().map((project) => ({
@@ -22,6 +26,25 @@ export function generateStaticParams() {
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: ProjectPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
+
+  if (!project) return { title: "Project not found" };
+
+  const { frontmatter } = project;
+
+  return buildMetadata({
+    title: frontmatter.title,
+    description: frontmatter.summary,
+    path: `/projects/${frontmatter.slug}`,
+    type: "article",
+    tags: frontmatter.tags,
+  });
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -36,6 +59,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <article className="pb-24">
+      <JsonLd data={projectSchema(project)} />
+
       <div className="mx-auto max-w-6xl px-5 pt-12 sm:px-8">
         <Link
           href="/#projects"

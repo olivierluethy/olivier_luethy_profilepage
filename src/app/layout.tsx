@@ -28,8 +28,21 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: site.name,
+  // Lets every page express canonical and OG URLs as site-relative paths.
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — ${site.jobTitle}`,
+    template: `%s — ${site.name}`,
+  },
   description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
 };
 
 export default function RootLayout({
