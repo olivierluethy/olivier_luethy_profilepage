@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
@@ -80,6 +81,7 @@ export default function RootLayout({
           </main>
           <SiteFooter />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
