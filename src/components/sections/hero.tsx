@@ -28,7 +28,7 @@ export function Hero() {
     >
       <HudBackdrop />
 
-      <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:py-32">
+      <div className="relative mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-24 lg:py-32">
         {/* Top rail */}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-line pb-4 font-mono text-hud uppercase text-faint">
           <span className="flex items-center gap-2 text-signal-ink">
@@ -39,7 +39,7 @@ export function Hero() {
           <span className="hidden sm:inline">{site.jobTitle}</span>
         </div>
 
-        <div className="grid gap-12 pt-12 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-16">
+        <div className="grid gap-10 pt-10 sm:gap-12 sm:pt-12 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-16">
           <div className="min-w-0">
             <h1
               id="hero-heading"
@@ -48,11 +48,11 @@ export function Hero() {
               {site.name}
             </h1>
 
-            <p className="mt-6 max-w-xl text-pretty text-xl leading-relaxed text-muted">
+            <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted sm:mt-6 sm:text-xl">
               {site.tagline}
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3 sm:mt-10">
               <ActionLink href="/resume" variant="primary">
                 Résumé
               </ActionLink>
@@ -92,7 +92,7 @@ export function Hero() {
         </div>
 
         {/* Bottom rail — telemetry, not a stat block. */}
-        <dl className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+        <dl className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:mt-16 sm:grid-cols-3">
           {heroStats.map((stat) => (
             <div key={stat.label} className="bg-panel px-5 py-4">
               <dt className="font-mono text-hud uppercase text-faint">

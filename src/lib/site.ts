@@ -36,8 +36,7 @@ export const site = {
   description:
     "Software developer with an AI-first mindset and a passion for building things. Overall winner of SwissHacks 2024 with a production RAG pipeline, and developer of AI-integrated Chrome extensions used by thousands. Based in Lucerne, Switzerland.",
   /** No trailing slash. Drives canonical URLs, sitemap and OG images. */
-  // [[Set this to the deployed portfolio domain once it is live.]]
-  url: "https://example.com",
+  url: "https://olivierluethy.com",
   locale: "en_US",
   email: "olivier.luethy@gmx.net",
   /**
