@@ -19,6 +19,7 @@ export interface HomeSection {
 export const homeSections: readonly HomeSection[] = [
   { id: "top", callsign: "Home", label: "Home" },
   { id: "work", callsign: "Feat", label: "Featured work" },
+  { id: "stack", callsign: "Stack", label: "Tech stack" },
   { id: "projects", callsign: "All", label: "All projects" },
   { id: "path", callsign: "Path", label: "Experience" },
   { id: "hackathons", callsign: "Hack", label: "Hackathons" },

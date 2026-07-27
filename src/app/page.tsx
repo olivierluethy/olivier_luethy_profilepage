@@ -12,6 +12,7 @@ import { Hero } from "@/components/sections/hero";
 import { LatestPosts } from "@/components/sections/latest-posts";
 import { Maker } from "@/components/sections/maker";
 import { Sports } from "@/components/sections/sports";
+import { TechStack } from "@/components/sections/tech-stack";
 import { buildMetadata } from "@/lib/metadata";
 import { personSchema } from "@/lib/schema";
 import { site } from "@/lib/site";
@@ -38,6 +39,7 @@ export default function Home() {
       <SectionNav />
       <Hero />
       <FeaturedProjects />
+      <TechStack />
       <AllProjects />
       <Experience />
       <Hackathons />

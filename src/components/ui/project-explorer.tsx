@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { ProjectCard } from "@/components/ui/project-card";
 import type { ProjectSummary } from "@/lib/content/types";
@@ -29,6 +29,21 @@ export interface ProjectExplorerProps {
 export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) {
   const [sort, setSort] = useState<SortKey>("newest");
   const [filter, setFilter] = useState<string | null>(null);
+
+  // The tech grid higher up the page filters this list by dispatching an event,
+  // then we scroll the list into view so the result is visible immediately.
+  useEffect(() => {
+    const onSelect = (event: Event) => {
+      const name = (event as CustomEvent<string>).detail;
+      if (!name) return;
+      setFilter(name);
+      document
+        .getElementById("projects")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    window.addEventListener("select-tech", onSelect);
+    return () => window.removeEventListener("select-tech", onSelect);
+  }, []);
 
   const visible = useMemo(() => {
     const matches = filter
