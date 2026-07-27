@@ -11,27 +11,38 @@ export interface CommunityEntry {
 
 export const community: readonly CommunityEntry[] = [
   {
-    id: "sports-club",
-    organisation: "[[Local sports club]]",
-    role: "IT and website",
-    period: "[[2023]] — Present",
+    id: "kulturverein-meggen",
+    organisation: "Kulturverein Meggen",
+    role: "IT, communication & visual media",
+    period: "2022 — Present",
     description:
-      "[[Run the club's website and member mailing. Rebuilt it so the committee can update it without me — that was the point.]]",
+      "Design and deliver the annual General Assembly presentations, handle event photography and image editing for the club website, and built an Outlook-based automation for mass member mailing without external tools.",
   },
   {
     id: "treasury",
-    organisation: "[[Local club]]",
+    // [[Add the club's name — the sports club Kassenwart was built for.]]
+    organisation: "[[Local sports club]]",
     role: "Treasury tooling",
-    period: "[[2024]] — [[2025]]",
+    period: "2024 — 2025",
     description:
       "Built and ran Kassenwart, the tool that replaced the committee's shared spreadsheet, then handed the data over cleanly when the club merged.",
   },
   {
-    id: "repair-cafe",
-    organisation: "[[Repair café]]",
-    role: "Volunteer",
-    period: "[[2022]] — Present",
+    id: "corp-ch",
+    organisation: "Corp.ch",
+    role: "Founder & maintainer",
+    // [[Add the period, e.g. 2023 — Present.]]
+    period: "[[Period — to add]]",
     description:
-      "[[A Saturday a month fixing laptops and phones for people who would otherwise replace them. Most of it is patience rather than skill.]]",
+      "A project I built and run on a voluntary basis, for charitable purposes.",
+  },
+  {
+    id: "fitpop",
+    organisation: "FitPop",
+    role: "Volunteer",
+    // [[Add the period.]]
+    period: "[[Period — to add]]",
+    // [[Add a sentence on what you help with at FitPop.]]
+    description: "[[What you help with at FitPop — to add.]]",
   },
 ] as const;

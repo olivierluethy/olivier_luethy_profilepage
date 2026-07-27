@@ -18,28 +18,32 @@ export interface RaceResult {
 
 export const races: readonly RaceResult[] = [
   {
-    id: "race-1",
-    event: "[[Zurich Half Marathon]]",
-    distance: "21.1 km",
-    date: "[[April 2026]]",
-    time: "[[1:44:12]]",
-    note: "[[Personal best]]",
+    id: "swisscitymarathon-2025",
+    event: "SwissCityMarathon",
+    distance: "42.195 km",
+    date: "2025",
+    // [[Add your finish time.]]
+    time: "[[--:--:--]]",
+    // [[Add a note, e.g. a personal best or the conditions.]]
+    note: "[[Note — to add]]",
   },
+  // The CV names no other specific races, so the two rows below are left as
+  // clearly-marked placeholders — fill them only with real results.
   {
     id: "race-2",
-    event: "[[Grand Prix von Bern]]",
-    distance: "16.1 km",
-    date: "[[May 2025]]",
-    time: "[[1:18:40]]",
-    note: "[[First time on this course]]",
+    event: "[[Half marathon]]",
+    distance: "21.1 km",
+    date: "[[Year]]",
+    time: "[[--:--:--]]",
+    note: "[[Note]]",
   },
   {
     id: "race-3",
-    event: "[[Winter half marathon]]",
+    event: "[[Half marathon]]",
     distance: "21.1 km",
-    date: "[[November 2024]]",
-    time: "[[1:51:05]]",
-    note: "[[First half marathon]]",
+    date: "[[Year]]",
+    time: "[[--:--:--]]",
+    note: "[[Note]]",
   },
 ] as const;
 
@@ -51,7 +55,8 @@ export const sportsProfile = {
   embedHtml: "",
   /** Shown when `embedHtml` is empty. Swap for a real stats screenshot. */
   placeholderImage: "/images/sports/strava-stats.png",
+  // [[Paste your Strava profile URL here.]]
   profileUrl: "[[https://strava.com/athletes/yourid]]",
   summary:
-    "[[A sentence on why you run — what it gives you that sitting at a keyboard does not.]]",
+    "I run long distances — several half-marathons and marathons, and currently training toward the SwissCityMarathon. It is the counterweight to sitting at a keyboard.",
 } as const;

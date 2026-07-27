@@ -1,0 +1,37 @@
+---
+title: "Promptin"
+slug: "promptin"
+summary: "Chrome extension that injects a slash-command prompt manager into ChatGPT, Claude, Gemini and Grok. 200+ weekly users."
+role: "Solo developer — architecture, build, Chrome Web Store publishing"
+status: "active"
+startDate: "2025-06"
+endDate: ""
+techStack: ["JavaScript", "Chrome Extension APIs", "Shadow DOM", "MutationObserver"]
+interfaces: ["ChatGPT", "Claude", "Gemini", "Grok"]
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/promptin-cover.png"
+featured: false
+tags: ["Chrome Extension", "AI", "Productivity"]
+---
+
+Promptin is a slash-command prompt manager that lives inside the chat box of
+ChatGPT, Claude, Gemini and Grok. Type a slash command and your saved prompt is
+injected straight into the composer — no copy-paste, no switching tabs to a note
+somewhere.
+
+It has grown to 200+ weekly users.
+
+## Staying out of the host page's way
+
+The hard part of a browser extension that injects UI into someone else's app is
+that you do not control their markup, and it changes without warning. Promptin
+renders its UI inside a **Shadow DOM** so its styles never leak into — or get
+broken by — the host page, and uses a **MutationObserver** to re-attach itself
+whenever the underlying chat interface re-renders.
+
+That combination is what lets one extension support four different AI products
+that each structure their DOM differently, without a per-site rewrite every time
+one of them ships a redesign.

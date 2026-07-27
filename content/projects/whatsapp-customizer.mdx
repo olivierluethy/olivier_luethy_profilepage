@@ -1,0 +1,32 @@
+---
+title: "WhatsApp Customizer"
+slug: "whatsapp-customizer"
+summary: "Chrome extension that themes and customises WhatsApp Web. 3,000+ weekly users."
+role: "Solo developer — architecture, build, Chrome Web Store publishing"
+status: "active"
+startDate: "2025-01"
+endDate: ""
+techStack: ["JavaScript", "Chrome Extension APIs", "Local Storage Sync"]
+interfaces: ["WhatsApp Web"]
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/whatsapp-customizer-cover.png"
+featured: false
+tags: ["Chrome Extension", "Productivity"]
+---
+
+WhatsApp Customizer restyles WhatsApp Web — themes, colours and layout tweaks —
+and remembers your choices across devices. It is the most-used thing I have
+shipped, with 3,000+ weekly users.
+
+## How it works
+
+The extension applies a custom theme engine over WhatsApp Web through dynamic DOM
+manipulation, and persists each user's settings with **Chrome's storage sync**
+so the same look follows them from one machine to another.
+
+Like Promptin, it has to survive a host app it does not control: WhatsApp Web
+re-renders aggressively, so the theming has to re-apply itself rather than assume
+the page stays still.

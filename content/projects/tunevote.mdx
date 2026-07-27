@@ -1,0 +1,33 @@
+---
+title: "TuneVote"
+slug: "tunevote"
+summary: "Real-time music voting platform with AI song suggestions and YouTube integration."
+role: "Solo developer — full stack, infrastructure, deployment"
+status: "active"
+startDate: "2024-06"
+endDate: ""
+techStack: ["Next.js", "React", "Vite", "Socket.io", "Docker", "Knex"]
+interfaces: ["OpenAI API", "YouTube (yt-dlp)", "Google OAuth", "Facebook OAuth"]
+aiModels: ["OpenAI GPT-4"]
+liveUrl: "https://tunevote.com"
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/tunevote-cover.png"
+featured: false
+tags: ["Web", "AI", "Real-time"]
+---
+
+TuneVote is a music voting platform: a room votes on what plays next, in real
+time, and the platform suggests songs to add.
+
+## The moving parts
+
+- **Real-time voting** over Socket.io, so every participant sees the queue update
+  as votes come in rather than on a refresh.
+- **AI song suggestions** through the OpenAI API, to seed and extend a queue when
+  the room runs dry.
+- **YouTube integration** via yt-dlp for resolving tracks.
+- **Sign-in** with Google and Facebook.
+
+It runs in Docker on a VPS, with database schema changes handled through Knex
+migrations rather than by hand.
