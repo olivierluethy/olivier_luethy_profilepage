@@ -1,0 +1,39 @@
+---
+title: "DroneLog"
+slug: "dronelog"
+summary: "EASA-compliant drone flight-logbook platform — a multi-tenant REST API with real-time notifications and a full test suite."
+role: "Solo developer — architecture, API, testing, CI/CD"
+status: "active"
+startDate: "2025-09"
+endDate: ""
+techStack: ["C#", "ASP.NET Core 8", "Entity Framework Core", "CQRS / MediatR", "SignalR", "Hangfire"]
+interfaces: ["Azure Blob Storage", "QuestPDF", "JWT / RBAC"]
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/dronelog-cover.png"
+featured: false
+tags: ["Backend", "Clean Architecture", ".NET"]
+---
+
+DroneLog is an EASA-compliant flight-logbook platform for drone operators, built
+as a technical showcase of clean architecture on .NET 8.
+
+## Architecture
+
+- **Multi-tenancy** enforced at the data layer: row-level isolation through EF
+  Core global query filters resolved from JWT claims, so a tenant can never read
+  another's rows even if a query forgets to scope itself.
+- **Policy-based RBAC** across three roles — Admin, Instructor and Pilot.
+- **An EASA compliance engine** using a `Result<T>` pattern to make rule
+  violations explicit rather than exceptional.
+- **Real-time notifications** over SignalR, and **licence-expiry warnings**
+  scheduled with Hangfire.
+- **PDF export** via QuestPDF; file storage on Azure Blob Storage.
+
+## Testing and delivery
+
+69 tests: unit tests with xUnit, FluentAssertions and NSubstitute, plus
+integration tests against a real SQL Server via Testcontainers. CI/CD runs on
+GitHub Actions with Docker Compose.

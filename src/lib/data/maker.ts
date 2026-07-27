@@ -20,35 +20,36 @@ export interface MakerBuild {
 export const makerBuilds: readonly MakerBuild[] = [
   {
     id: "freestyle",
-    title: "[[5\" freestyle quad]]",
+    title: "Self-built FPV freestyle quads",
     description:
-      "[[What you built and why this particular setup. Mention what you learned tuning it — PID work, filtering, or the crash that taught you something.]]",
+      "FPV drones I build and configure myself, with a focus on freestyle flying. Tuning them is where the real learning happens.",
     image: "/images/maker/freestyle-build.png",
-    tools: ["Betaflight", "Soldering", "Carbon fibre"],
+    tools: ["Betaflight", "Soldering", "Carbon fibre", "Fusion 360"],
   },
   {
-    id: "camera-mount",
-    title: "[[Printed camera mount]]",
+    id: "fusion-parts",
+    title: "FPV parts, designed in Fusion 360",
     description:
-      "[[Designed in Fusion 360 after breaking the third off-the-shelf mount. Say what the design constraint was — impact absorption, weight, print orientation.]]",
+      "Custom drone components I design in Autodesk Fusion 360 when the off-the-shelf part keeps breaking, then print and iterate on until they survive the crash.",
     image: "/images/maker/camera-mount.png",
+    // [[Replace with a real Fusion 360 export (.glb/.gltf) in /public/models.]]
     model: "/models/placeholder-part.gltf",
     tools: ["Fusion 360", "Cura", "PETG"],
   },
   {
-    id: "tinywhoop",
-    title: "[[Tinywhoop build]]",
+    id: "bird-feeder",
+    title: "3D-printed bird-feeder bowl",
     description:
-      "[[The indoor build. What made it different from the freestyle quad, and what you had to give up to hit the weight.]]",
+      "An ongoing print: a self-designed bird-feeder bowl in transparent biodegradable PLA, finished with a food-safe epoxy resin coating — designed and manufactured independently.",
     image: "/images/maker/tinywhoop.png",
-    tools: ["Betaflight", "Micro soldering"],
+    tools: ["Fusion 360", "PLA", "Epoxy resin"],
   },
   {
-    id: "print-farm",
-    title: "[[Printer and workflow]]",
+    id: "print-workflow",
+    title: "3D-printing workflow",
     description:
-      "[[Your printer, your slicer profiles, and the thing you print most often. Recruiters read this as evidence you iterate on physical constraints too.]]",
+      "My printing setup: slicing in Ultimaker Cura and running prints remotely through OctoPrint on a Raspberry Pi.",
     image: "/images/maker/print-farm.png",
-    tools: ["Cura", "PLA", "PETG"],
+    tools: ["Ultimaker Cura", "OctoPrint", "Raspberry Pi", "PLA"],
   },
 ] as const;

@@ -17,33 +17,45 @@ export type SocialLink = NavLink & {
   external: boolean;
 };
 
+/**
+ * Reusable profile links. Kept as named constants so the same values can be
+ * imported anywhere — the hero, the footer, JSON-LD, or an external portal —
+ * and changed in exactly one place.
+ */
+export const GITHUB_URL = "https://github.com/olivierluethy";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/olivier-luethy";
+/** The CV/resume file in /public. Reference this from other portals too. */
+export const RESUME_URL = "/olivier_luethy_cv.pdf";
+
 export const site = {
-  name: "[[Your name]]",
+  name: "Olivier Lüthy",
   /** Shown under the name in the hero. */
-  tagline: "[[one-line positioning statement]]",
+  tagline:
+    "Software developer with an AI-first focus — production AI tools, from RAG pipelines to Chrome extensions used by thousands.",
   /** Used as the default meta description and in the footer. */
   description:
-    "[[Short paragraph about what you build and who you build it for. Used as the site-wide meta description.]]",
+    "Software developer with an AI-first mindset and a passion for building things. Overall winner of SwissHacks 2024 with a production RAG pipeline, and developer of AI-integrated Chrome extensions used by thousands. Based in Lucerne, Switzerland.",
   /** No trailing slash. Drives canonical URLs, sitemap and OG images. */
+  // [[Set this to the deployed portfolio domain once it is live.]]
   url: "https://example.com",
   locale: "en_US",
-  email: "[[you@example.com]]",
+  email: "olivier.luethy@gmx.net",
   /**
-   * Asset paths resolve to real placeholder files so nothing renders broken.
+   * Asset paths resolve to real files so nothing renders broken.
    * Overwrite the files in /public rather than changing these paths:
-   *   /public/resume.pdf        — your CV
-   *   /public/images/profile.jpg — your photo
+   *   /public/olivier_luethy_cv.pdf — your CV (see RESUME_URL)
+   *   /public/images/profile.jpg    — your photo
    */
-  resumeUrl: "/resume.pdf",
+  resumeUrl: RESUME_URL,
   profileImage: "/images/profile.jpg",
   /** Falls back to the site name if you would rather not show a location. */
-  location: "[[Switzerland]]",
-  jobTitle: "[[Software Engineer]]",
+  location: "Lucerne, Switzerland",
+  jobTitle: "Software Developer",
 } as const;
 
 export const socials: readonly SocialLink[] = [
-  { label: "GitHub", href: "[[https://github.com/yourhandle]]", external: true },
-  { label: "LinkedIn", href: "[[https://linkedin.com/in/yourhandle]]", external: true },
+  { label: "GitHub", href: GITHUB_URL, external: true },
+  { label: "LinkedIn", href: LINKEDIN_URL, external: true },
 ] as const;
 
 /**
@@ -51,9 +63,9 @@ export const socials: readonly SocialLink[] = [
  * recruiter can verify elsewhere on the page — they are evidence, not slogans.
  */
 export const heroStats: readonly { value: string; label: string }[] = [
-  { value: "[[3]]", label: "Apps shipped" },
-  { value: "[[2]]", label: "Hackathons won" },
-  { value: "[[1st]]", label: "Paid app at [[19]]" },
+  { value: "6", label: "Apps shipped" },
+  { value: "1st", label: "SwissHacks 2024" },
+  { value: "3,000+", label: "Weekly extension users" },
 ] as const;
 
 /** Top-level routes in the nav. In-page section links are added in Phase 2. */

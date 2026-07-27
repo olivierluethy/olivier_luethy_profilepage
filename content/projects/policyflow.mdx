@@ -1,0 +1,35 @@
+---
+title: "PolicyFlow"
+slug: "policyflow"
+summary: "Swiss insurance broker platform — a KVG premium calculator with offer and policy management."
+role: "Solo developer — architecture, domain modelling, testing"
+status: "active"
+startDate: "2026-01"
+endDate: ""
+techStack: ["Java 21", "Quarkus", "PostgreSQL", "Flyway"]
+interfaces: ["OpenPDF", "JWT (RS256)", "Swagger UI"]
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/policyflow-cover.png"
+featured: false
+tags: ["Backend", "Clean Architecture", "Java"]
+---
+
+PolicyFlow is a Swiss insurance-broker platform built on Quarkus, and a second
+take on the clean-architecture ideas behind [DroneLog](/projects/dronelog) —
+this time in Java.
+
+## What it does
+
+- **A KVG premium calculator** using a multiplicative model over age group,
+  canton, deductible and accident cover.
+- **Offer and policy management** driven by an explicit state machine, so a
+  policy can only move through valid transitions.
+- **An immutable audit log**, because in insurance the history of a decision
+  matters as much as the decision.
+- **PDF export** via OpenPDF, and stateless authentication with JWT (RS256).
+
+Schema changes go through Flyway migrations, the API is documented with Swagger
+UI, and the domain is covered by JUnit 5, RestAssured and Mockito tests.
