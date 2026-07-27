@@ -81,7 +81,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <h1 className="mt-5 max-w-4xl text-balance font-display text-display-lg font-bold">
           {frontmatter.title}
         </h1>
-        <p className="mt-5 max-w-2xl text-pretty text-xl leading-relaxed text-muted">
+        <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-muted sm:text-xl">
           {frontmatter.summary}
         </p>
 

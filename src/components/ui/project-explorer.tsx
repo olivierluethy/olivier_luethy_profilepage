@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { ProjectCard } from "@/components/ui/project-card";
 import type { ProjectSummary } from "@/lib/content/types";
+import type { TechIcon } from "@/lib/tech-icons";
 
 type SortKey = "newest" | "active";
 
@@ -15,7 +16,7 @@ const SORTS: { key: SortKey; label: string }[] = [
 export interface ProjectExplorerProps {
   projects: ProjectSummary[];
   tags: string[];
-  tech: string[];
+  tech: TechIcon[];
 }
 
 /**
@@ -50,6 +51,13 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
   const toggle = (value: string) =>
     setFilter((current) => (current === value ? null : value));
 
+  const chipClass = (active: boolean) =>
+    `inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-hud uppercase transition-colors ${
+      active
+        ? "border-signal bg-signal text-[#0B0F14]"
+        : "border-line bg-panel text-muted hover:border-signal/50 hover:text-signal-ink"
+    }`;
+
   const chip = (value: string) => {
     const active = filter === value;
     return (
@@ -58,13 +66,32 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
         type="button"
         onClick={() => toggle(value)}
         aria-pressed={active}
-        className={`inline-flex items-center rounded-full border px-3 py-1.5 font-mono text-hud uppercase transition-colors ${
-          active
-            ? "border-signal bg-signal text-[#0B0F14]"
-            : "border-line bg-panel text-muted hover:border-signal/50 hover:text-signal-ink"
-        }`}
+        className={chipClass(active)}
       >
         {value}
+      </button>
+    );
+  };
+
+  const techChip = (icon: TechIcon) => {
+    const active = filter === icon.name;
+    return (
+      <button
+        key={icon.name}
+        type="button"
+        onClick={() => toggle(icon.name)}
+        aria-pressed={active}
+        title={`Show projects using ${icon.name}`}
+        className={chipClass(active)}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          className={`size-3.5 shrink-0 ${icon.branded ? "" : "opacity-60"}`}
+        >
+          <path d={icon.path} fill="currentColor" />
+        </svg>
+        {icon.name}
       </button>
     );
   };
@@ -120,7 +147,7 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
             <span className="mr-1 font-mono text-hud uppercase text-faint">
               Tech
             </span>
-            {tech.map(chip)}
+            {tech.map(techChip)}
           </div>
         ) : null}
       </div>

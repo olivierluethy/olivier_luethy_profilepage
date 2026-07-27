@@ -32,7 +32,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={`scroll-mt-nav border-t border-line py-20 sm:py-28 ${className}`}
+      className={`scroll-mt-nav border-t border-line py-14 sm:py-24 lg:py-28 ${className}`}
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal>
@@ -42,18 +42,18 @@ export function Section({
           </p>
           <h2
             id={`${id}-heading`}
-            className="mt-5 max-w-3xl text-balance font-display text-display font-bold"
+            className="mt-4 max-w-3xl text-balance font-display text-display font-bold sm:mt-5"
           >
             {title}
           </h2>
           {lede ? (
-            <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-muted">
+            <p className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:mt-5 sm:text-lg">
               {lede}
             </p>
           ) : null}
         </Reveal>
 
-        <div className="mt-12">{children}</div>
+        <div className="mt-10 sm:mt-12">{children}</div>
       </div>
     </section>
   );
