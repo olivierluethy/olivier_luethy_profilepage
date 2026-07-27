@@ -63,7 +63,7 @@ export const socials: readonly SocialLink[] = [
  * recruiter can verify elsewhere on the page — they are evidence, not slogans.
  */
 export const heroStats: readonly { value: string; label: string }[] = [
-  { value: "6", label: "Apps shipped" },
+  { value: "8", label: "Apps shipped" },
   { value: "1st", label: "SwissHacks 2024" },
   { value: "3,000+", label: "Weekly extension users" },
 ] as const;

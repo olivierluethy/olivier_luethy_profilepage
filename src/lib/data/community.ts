@@ -7,6 +7,8 @@ export interface CommunityEntry {
   period: string;
   /** What was actually done, in plain terms. */
   description: string;
+  /** Optional external link; the organisation name links out when present. */
+  url?: string;
 }
 
 export const community: readonly CommunityEntry[] = [
@@ -17,6 +19,7 @@ export const community: readonly CommunityEntry[] = [
     period: "2022 — Present",
     description:
       "Design and deliver the annual General Assembly presentations, handle event photography and image editing for the club website, and built an Outlook-based automation for mass member mailing without external tools.",
+    url: "https://www.kulturvereinmeggen.ch/",
   },
   {
     id: "treasury",
@@ -35,14 +38,5 @@ export const community: readonly CommunityEntry[] = [
     period: "[[Period — to add]]",
     description:
       "A project I built and run on a voluntary basis, for charitable purposes.",
-  },
-  {
-    id: "fitpop",
-    organisation: "FitPop",
-    role: "Volunteer",
-    // [[Add the period.]]
-    period: "[[Period — to add]]",
-    // [[Add a sentence on what you help with at FitPop.]]
-    description: "[[What you help with at FitPop — to add.]]",
   },
 ] as const;

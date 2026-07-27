@@ -22,17 +22,16 @@ export const hackathons: readonly Hackathon[] = [
   {
     id: "swisshacks-2026",
     event: "SwissHacks 2026",
-    // [[Add the project you built at SwissHacks 2026.]]
-    project: "[[Project — to add]]",
+    project: "Sentinel — KYC-drift monitor",
     date: "2026",
     location: "Zurich",
     result: "Participant",
     won: false,
-    // [[Add a sentence on what you built at SwissHacks 2026.]]
-    description: "[[What you built at SwissHacks 2026 — to add.]]",
+    description:
+      "Sentinel — a dynamic KYC-drift monitor built for AMINA Bank's challenge. It watches a bank's customer book for the slow structural changes that invalidate an onboarding risk profile, escalating to LLM reasoning only when a customer's baseline actually moves.",
     image: "/images/hackathons/swiss-ai-hack.png",
     teamSize: 4, // [[confirm team size]]
-    url: "",
+    url: "https://sentinel.viktorsharha.com/",
   },
   {
     id: "swisshacks-2025",

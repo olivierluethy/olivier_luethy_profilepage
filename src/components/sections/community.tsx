@@ -20,7 +20,19 @@ export function Community() {
                   {entry.period}
                 </p>
                 <h3 className="mt-3 text-balance font-display text-lg font-semibold">
-                  {entry.organisation}
+                  {entry.url ? (
+                    <a
+                      href={entry.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="transition-colors hover:text-signal-ink"
+                    >
+                      {entry.organisation}
+                      <span aria-hidden="true"> ↗</span>
+                    </a>
+                  ) : (
+                    entry.organisation
+                  )}
                 </h3>
                 <p className="mt-1 font-mono text-label uppercase text-faint">
                   {entry.role}
