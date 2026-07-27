@@ -1,0 +1,59 @@
+---
+title: "Enterprise Knowledge Synthesizer & Decision Engine"
+slug: "knowledge-synthesizer"
+summary: "The SwissHacks 2025 build: turn a company's scattered documents into correlated, actionable decisions — with a human-in-the-loop that steers the AI in real time, at a fraction of the token cost."
+role: "Team project — SwissHacks 2025"
+status: "archived"
+startDate: "2025-04"
+endDate: "2025-04"
+techStack: ["Python", "FastAPI", "Next.js", "TypeScript"]
+interfaces: ["OpenAI API", "Vercel"]
+aiModels: ["OpenAI GPT-4"]
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/knowledge-synthesizer-cover.png"
+featured: false
+tags: ["AI", "RAG", "Hackathon"]
+---
+
+The SwissHacks 2025 challenge: companies sit on unstructured data spread across
+silos — PDF, Word, Excel, PPTX, Markdown, plain text — and need to turn it into
+*correlated* business decisions, not just search results. The real difficulty was
+never the AI call. It was the two things around it: preparing that heterogeneous
+mess efficiently before handing it to a model, and stopping API costs from
+exploding once you do.
+
+## What we built
+
+An end-to-end prototype for intelligent data aggregation and visualisation, built
+around three ideas.
+
+### 1. Algorithmic data synthesis (before the AI)
+
+Rather than throwing raw documents at a model, we designed algorithms to structure
+and filter massive, heterogeneous datasets first, so the AI receives precise,
+context-relevant information. Most of the engineering — and most of the value —
+lives in this pre-processing layer, not in the prompt.
+
+### 2. Human-in-the-loop that adapts in real time
+
+The part I'm proudest of: users give the AI feedback on proposed decision points
+directly from the frontend, and the system adjusts its reasoning strategy and how
+it correlates data **in real time**. It is a control surface over the model's
+thinking, not a one-shot answer you either accept or discard.
+
+### 3. Cost as a first-class constraint
+
+We built a backend strategy specifically to minimise the number of tokens shipped
+to the LLM APIs — because a decision engine nobody can afford to run is not a
+product. Cutting token transfer was treated as a core feature, the same way the
+[Sentinel](/projects/sentinel) work a year later made cost structural.
+
+## The result
+
+A minimalist, deliberately simple frontend that translates complex analysis into
+direct, actionable insights — the complexity pushed into the pipeline so the user
+only ever sees the decision.
+
+**Stack:** Python · FastAPI · OpenAI API · Next.js · Vercel.

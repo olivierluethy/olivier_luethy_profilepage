@@ -50,9 +50,21 @@ export function ProjectCard({
             </span>
           </div>
 
-          <h3 className="mt-3 font-display text-xl font-semibold text-balance transition-colors group-hover:text-signal-ink">
-            {frontmatter.title}
-          </h3>
+          <div className="mt-3 flex items-center gap-2">
+            {frontmatter.favicon ? (
+              <Image
+                src={frontmatter.favicon}
+                alt=""
+                width={20}
+                height={20}
+                unoptimized
+                className="size-5 shrink-0 rounded"
+              />
+            ) : null}
+            <h3 className="font-display text-xl font-semibold text-balance transition-colors group-hover:text-signal-ink">
+              {frontmatter.title}
+            </h3>
+          </div>
           <p className="mt-2 line-clamp-2 text-pretty text-sm leading-relaxed text-muted">
             {frontmatter.summary}
           </p>
@@ -96,9 +108,21 @@ export function ProjectCard({
           </span>
         </div>
 
-        <h3 className="mt-4 text-balance font-display text-display-sm font-bold transition-colors group-hover:text-signal-ink">
-          {frontmatter.title}
-        </h3>
+        <div className="mt-4 flex items-center gap-2.5">
+          {frontmatter.favicon ? (
+            <Image
+              src={frontmatter.favicon}
+              alt=""
+              width={24}
+              height={24}
+              unoptimized
+              className="size-6 shrink-0 rounded"
+            />
+          ) : null}
+          <h3 className="text-balance font-display text-display-sm font-bold transition-colors group-hover:text-signal-ink">
+            {frontmatter.title}
+          </h3>
+        </div>
         <p className="mt-3 text-pretty leading-relaxed text-muted">
           {frontmatter.summary}
         </p>

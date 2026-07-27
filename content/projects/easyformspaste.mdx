@@ -1,0 +1,47 @@
+---
+title: "EasyFormsPaste"
+slug: "easyformspaste"
+summary: "A platform that gives any website a working form without a backend — drop in a widget, get an ID, and submissions, storage, notifications and automations are all handled for you."
+role: "Solo developer — platform, npm widget, API, storage"
+status: "active"
+startDate: "2025-01"
+endDate: ""
+techStack: ["Next.js", "React", "TypeScript"]
+interfaces: ["Easy Forms (npm widget)", "Hosted submission API"]
+aiModels: []
+liveUrl: "https://easyformspaste.com"
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/easy-contact-forms-cover.png"
+featured: false
+tags: ["SaaS", "Web", "Developer tools"]
+---
+
+Every time you add a contact form to a website, you rebuild the same plumbing: a
+database to store submissions, validation, an API endpoint to receive them, and
+the CORS and traffic handling in between. Do it across ten sites and you own ten
+databases and ten APIs for what is, conceptually, one job.
+
+EasyFormsPaste collapses all of that into a platform, so the site owner never
+touches a backend.
+
+## How it works
+
+1. **Install the widget.** A React/Next.js site pulls in the **Easy Forms** npm
+   package — the form widget sits wherever you place it.
+2. **Create the form.** Log in to EasyFormsPaste, create a project (say, the
+   website), and create a form — a contact form, or any form where someone enters
+   something that needs to go somewhere.
+3. **Wire it with an ID.** The form gets an ID. Drop the ID into the widget on
+   your page, and the right form loads itself.
+4. **Submissions handle themselves.** When someone submits, the data goes straight
+   to EasyFormsPaste — no traffic, CORS or storage for the site owner to manage.
+   You get notified when something comes in, and can define what happens next
+   through automations.
+
+## Why it's more than a contact form
+
+The same mechanism works for *any* form that collects input and needs to persist
+it — not just "contact us." It turns a recurring, per-site engineering task into a
+one-time embed, which is exactly the kind of bottleneck I like to remove: build
+the platform once so the tenth website costs a paste, not a project.
