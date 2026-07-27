@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/ui/reveal";
@@ -66,6 +67,16 @@ export function Hackathons() {
                   <p className="mt-4 text-pretty text-sm leading-relaxed text-muted">
                     {event.description}
                   </p>
+
+                  {event.projectSlug ? (
+                    <Link
+                      href={`/projects/${event.projectSlug}`}
+                      className="mt-5 inline-flex items-center gap-2 font-mono text-hud uppercase text-signal-ink transition-colors hover:text-signal"
+                    >
+                      Read the build
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  ) : null}
                 </div>
               </article>
             </Reveal>

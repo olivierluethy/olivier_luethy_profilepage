@@ -1,0 +1,70 @@
+---
+title: "AI Document Intelligence Platform"
+slug: "document-intelligence"
+summary: "The SwissHacks 2024 build that won overall: drop in a dense PDF and get KPIs, a live document view and a chat interface back — instantly. Double Winner (Unique Challenge & Overall)."
+role: "Team project — SwissHacks 2024, 1st place & Overall Winner"
+status: "archived"
+startDate: "2024-04"
+endDate: "2024-04"
+techStack: ["Python", "FastAPI", "Next.js", "TypeScript"]
+interfaces: ["OpenAI API", "Pinecone", "Vercel"]
+aiModels: ["OpenAI GPT-4"]
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/document-intelligence-cover.png"
+featured: true
+tags: ["AI", "RAG", "Fintech", "Hackathon"]
+---
+
+This is the build that won **SwissHacks 2024 outright** — a *double* win, taking
+both the Unique Challenge and the Overall Hackathon out of a field competing over
+48 hours. The brief: turn a dense, unstructured financial PDF into decisions,
+fast enough that there is no waiting between uploading a document and
+interrogating it.
+
+## The hard part: zero-latency, not just "an LLM"
+
+Anyone can wire a PDF to an LLM. The reason this won was that the judges could
+upload a document and get answers with **no perceptible wait** — no spinner while
+a model chewed through the whole file. Getting there meant building a real
+retrieval pipeline rather than stuffing a document into a prompt.
+
+### The RAG architecture
+
+The key decision, and the one the overall win hinged on, was to combine proven
+open-source building blocks and cloud infrastructure so we could move at hackathon
+speed without hand-rolling the hard parts:
+
+1. **High-speed parsing.** An ingestion pipeline analyses the uploaded PDF in real
+   time, structures it, and surfaces the most important statistical key points
+   immediately — so the first useful view paints before the document has finished
+   processing end to end.
+2. **Vector search & embeddings.** We used **Pinecone** to index and store the
+   document's embeddings, which is what made semantic search feel instant:
+   retrieval is a nearest-neighbour lookup, so pulling the right context for a
+   question does not scale with document size.
+3. **Grounded generation.** Only the retrieved, relevant chunks go to the
+   **OpenAI** model, so answers are grounded in the document and cheap to produce
+   rather than re-reading the whole file per question.
+
+### The interface that sold it
+
+We wrapped it in a three-column dashboard that matches how someone actually reads
+a financial document under time pressure:
+
+- **Left** — aggregated KPI metrics and decision-making keywords, for the
+  ten-second overview.
+- **Middle** — the document itself.
+- **Right** — an interactive AI chat pinned to the document, for the follow-up
+  questions the metrics raise.
+
+## Why it was intense
+
+Two winning submissions in one weekend meant no slack anywhere: the parsing had to
+be fast, the retrieval had to be accurate, and the UI had to make all of it feel
+effortless — built in continuous night shifts as a team, holding one clear vision
+without letting performance slip.
+
+**Stack:** OpenAI API · Pinecone (vector database) · Python · FastAPI · Next.js ·
+Vercel.

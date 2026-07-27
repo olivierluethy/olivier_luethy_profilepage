@@ -31,10 +31,16 @@ function parseProject(fileName: string): Project {
 
   const startDate = requireDate(fm, "startDate", fileName);
   const endDate = optionalDate(fm, "endDate", fileName);
+  const slug = requireString(fm, "slug", fileName);
+
+  // A project's site icon is self-hosted under a slug-named file; derive it so
+  // authors don't repeat the path in every file.
+  const faviconFile = path.join(PROJECTS_DIR, "..", "..", "public", "images", "favicons", `${slug}.png`);
+  const favicon = fs.existsSync(faviconFile) ? `/images/favicons/${slug}.png` : "";
 
   const frontmatter: ProjectFrontmatter = {
     title: requireString(fm, "title", fileName),
-    slug: requireString(fm, "slug", fileName),
+    slug,
     summary: requireString(fm, "summary", fileName),
     role: requireString(fm, "role", fileName),
     status: requireOneOf(fm, "status", fileName, STATUSES),
@@ -46,6 +52,8 @@ function parseProject(fileName: string): Project {
     liveUrl: optionalString(fm, "liveUrl", fileName),
     githubUrl: optionalString(fm, "githubUrl", fileName),
     linkedinPostUrl: optionalString(fm, "linkedinPostUrl", fileName),
+    formerUrl: optionalString(fm, "formerUrl", fileName),
+    favicon,
     coverImage: requireString(fm, "coverImage", fileName),
     featured: optionalBoolean(fm, "featured", fileName),
     tags: optionalStringArray(fm, "tags", fileName),

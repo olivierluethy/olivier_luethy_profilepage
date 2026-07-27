@@ -16,6 +16,8 @@ export interface Hackathon {
   /** Team size including you. */
   teamSize: number;
   url: string;
+  /** Slug of the full project write-up on this site, if there is one. */
+  projectSlug?: string;
 }
 
 export const hackathons: readonly Hackathon[] = [
@@ -23,72 +25,75 @@ export const hackathons: readonly Hackathon[] = [
     id: "swisshacks-2026",
     event: "SwissHacks 2026",
     project: "Sentinel — KYC-drift monitor",
-    date: "2026",
+    date: "June 2026",
     location: "Zurich",
-    result: "Participant",
-    won: false,
+    result: "MVP — Most Valuable Player",
+    won: true,
     description:
-      "Sentinel — a dynamic KYC-drift monitor built for AMINA Bank's challenge. It watches a bank's customer book for the slow structural changes that invalidate an onboarding risk profile, escalating to LLM reasoning only when a customer's baseline actually moves.",
+      "Sentinel — a dynamic KYC-drift monitor for AMINA Bank's RegTech challenge, watching a bank's customer book for the slow structural changes that invalidate an onboarding risk profile. I was named MVP of the entire event, out of hundreds of participants.",
     image: "/images/hackathons/swiss-ai-hack.png",
     teamSize: 4, // [[confirm team size]]
     url: "https://sentinel.viktorsharha.com/",
+    projectSlug: "sentinel",
   },
   {
     id: "swisshacks-2025",
     event: "SwissHacks 2025",
-    project: "Corporate knowledge base",
-    date: "2025",
+    project: "Enterprise Knowledge Synthesizer",
+    date: "April 2025",
     location: "Zurich",
-    result: "Participant",
+    result: "Finalist",
     won: false,
     description:
-      "A corporate knowledge base with human-in-the-loop validation and a token-saving algorithm for cost-optimised LLM queries.",
+      "A decision engine that turns a company's scattered documents into correlated, actionable insights — with a human-in-the-loop that steers the AI in real time, and a backend built to slash the token cost of every query.",
     image: "/images/hackathons/mobility-jam.png",
     teamSize: 4, // [[confirm team size]]
     url: "",
+    projectSlug: "knowledge-synthesizer",
   },
   {
     id: "nasa-space-apps-2024",
     event: "NASA Space Apps Challenge 2024",
     project: "Kepler's Horizon",
     date: "October 2024",
-    location: "Remote",
-    result: "Global Nominee",
-    won: false,
+    location: "Lucerne / Remote",
+    result: "CH Winner — Global Nominee",
+    won: true,
     description:
-      "\"Kepler's Horizon\" — an interactive educational platform built with Next.js and FastAPI, using AI-assisted content generation. Selected as a Global Nominee.",
+      "\"Kepler's Horizon\" — an inclusive space-education platform that uses AI to break dense astronomy down into learning bites for people with cognitive or visual impairments. Swiss winner, nominated to represent Switzerland globally.",
     image: "/images/hackathons/health-hack.png",
-    teamSize: 4, // [[confirm team size]]
+    teamSize: 4,
     url: "",
+    projectSlug: "keplers-horizon",
   },
   {
     id: "swisshacks-2024",
     event: "SwissHacks 2024",
-    project: "Document chat (RAG pipeline)",
-    date: "2024",
+    project: "AI Document Intelligence Platform",
+    date: "April 2024",
     location: "Zurich",
-    result: "1st place — overall winner",
+    result: "1st place — Double Winner (Unique Challenge & Overall)",
     won: true,
     description:
-      "A document-chat system built on a production RAG pipeline — FastAPI backend, OpenAI embeddings + GPT-4, and a Pinecone vector database, with a chunking-and-retrieval strategy tuned for accuracy. Overall winner against 20+ teams, built with my team.",
+      "A zero-latency document-intelligence platform on a RAG architecture — Pinecone vector search, OpenAI generation, and a three-column KPI/document/chat dashboard. Won both the Unique Challenge and the Overall Hackathon.",
     image: "/images/hackathons/swiss-ai-hack.png",
     teamSize: 4, // [[confirm team size]]
     url: "",
+    projectSlug: "document-intelligence",
   },
   {
     id: "young-talents-2024",
     event: "Young Talents Hackathon 2024",
-    // [[Add the project you built at the Young Talents Hackathon.]]
-    project: "[[Project — to add]]",
-    date: "2024",
-    // [[Add the location.]]
-    location: "",
+    project: "AI ID-Scanner & Automated Onboarding",
+    date: "October 2024",
+    location: "Lucerne",
     result: "2nd place",
     won: false,
-    // [[Add a sentence on what you built.]]
-    description: "[[What you built at the Young Talents Hackathon 2024 — to add.]]",
+    description:
+      "Photograph an ID card and auto-fill a registration form, built on a zero-cost open-source vision pipeline — OpenCV pre-processing into Tesseract OCR, with parsing logic mapping the text to the right fields.",
     image: "/images/hackathons/mobility-jam.png",
     teamSize: 4, // [[confirm team size]]
     url: "",
+    projectSlug: "id-scanner",
   },
 ] as const;

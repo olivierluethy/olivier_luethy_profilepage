@@ -28,6 +28,10 @@ export interface ProjectFrontmatter {
   liveUrl: string;
   githubUrl: string;
   linkedinPostUrl: string;
+  /** URL a now-offline project used to live at; drives the "previously at …" note. */
+  formerUrl: string;
+  /** Self-hosted site icon (favicon), or "" when the project has none. Derived from the slug. */
+  favicon: string;
   coverImage: string;
   featured: boolean;
   tags: string[];

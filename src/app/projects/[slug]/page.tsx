@@ -8,6 +8,7 @@ import { ActionLink } from "@/components/ui/action-link";
 import { LivePreview } from "@/components/ui/live-preview";
 import { ProjectCard } from "@/components/ui/project-card";
 import { ProjectMeta } from "@/components/ui/project-meta";
+import { SiteLink } from "@/components/ui/site-link";
 import { StatusPill } from "@/components/ui/status-pill";
 import {
   getAllProjects,
@@ -85,7 +86,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {frontmatter.summary}
         </p>
 
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-6">
+          <SiteLink frontmatter={frontmatter} />
+        </div>
+
+        <div className="mt-6 flex flex-wrap gap-3">
           {frontmatter.githubUrl ? (
             <ActionLink href={frontmatter.githubUrl} external>
               View on GitHub

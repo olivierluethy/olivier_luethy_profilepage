@@ -31,3 +31,24 @@ time, and the platform suggests songs to add.
 
 It runs in Docker on a VPS, with database schema changes handled through Knex
 migrations rather than by hand.
+
+## The sub-project that made it work: a YouTube scraping funnel
+
+TuneVote only feels good if the songs are *already there* — if a user has to paste
+a YouTube link every time they want to add a track, the voting loop dies. So a
+second, separate project grew up alongside it, purely to fill the database in bulk.
+
+It's a Python funnel built on **yt-dlp**. You feed it a list of artists — one
+channel after another — and for each one it walks the channel and pulls every
+video's link. Take Taylor Swift: point the funnel at the channel and it scrapes
+all of her video URLs, writes them to a text file, and then that text file is
+matched up and turned into an SQL file that loads straight into TuneVote's
+database.
+
+The payoff is on the user's side. Because the catalogue is pre-populated this way,
+when someone searches for a Taylor Swift song it is already in the database and
+gets recommended and shown — no hunting for the right YouTube link, no pasting.
+The scraper is invisible to the end user, but it is the reason search actually
+returns something.
+
+**Sub-project stack:** Python · yt-dlp · SQL generation → TuneVote database.

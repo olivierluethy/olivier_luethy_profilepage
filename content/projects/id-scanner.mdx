@@ -1,0 +1,47 @@
+---
+title: "AI ID-Scanner & Automated Onboarding"
+slug: "id-scanner"
+summary: "Photograph an ID card, extract the data automatically, and auto-fill a registration form — built entirely on zero-cost open-source computer vision. 2nd place at the HSLU hackathon."
+role: "Team project — HSLU hackathon, 2nd place"
+status: "archived"
+startDate: "2024-10"
+endDate: "2024-10"
+techStack: ["Python", "OpenCV", "Tesseract OCR", "Angular"]
+interfaces: []
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/id-scanner-cover.png"
+featured: false
+tags: ["Computer Vision", "OCR", "Hackathon"]
+---
+
+Registration flows are full of manual typing. This build — **2nd place at the HSLU
+hackathon** (Netzwerk Neubad, Lucerne) — removed it: photograph an identity card,
+and the data is extracted and dropped into the web form automatically, error-free.
+
+## The deliberate constraint: zero-cost, open source
+
+The interesting decision here was architectural. We could have called Microsoft
+Azure Computer Vision and been done. Instead we chose a **free, local,
+open-source** pipeline on purpose — to prove maximum independence and cost
+efficiency, and because owning the pipeline meant we understood exactly why it
+failed when it did.
+
+## The computer-vision pipeline
+
+1. **Pre-processing with OpenCV.** Before any text is read, the image is cleaned
+   up — contrast optimisation, cropping, noise reduction — because OCR accuracy is
+   won or lost at this stage, not at the recognition stage.
+2. **Text extraction with Tesseract OCR.** The cleaned image goes through Tesseract
+   for precise text extraction from the ID document.
+3. **Algorithmic data mapping.** Tesseract returns unstructured text; we wrote the
+   parsing logic that analyses that output and maps it to the right form fields —
+   name, date of birth, ID number — which is the unglamorous part that actually
+   makes auto-fill trustworthy.
+4. **Real-time front-end validation.** A minimal Angular interface validates and
+   presents the extracted data live, so a human can catch an OCR slip before it
+   becomes a wrong record.
+
+**Stack:** Python · OpenCV · Tesseract OCR · Angular.
