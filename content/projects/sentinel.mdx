@@ -1,0 +1,74 @@
+---
+title: "Sentinel"
+slug: "sentinel"
+summary: "Dynamic KYC-drift monitor built for AMINA Bank's SwissHacks 2026 challenge — it catches the slow structural changes that quietly invalidate a customer's risk profile."
+role: "Team project — SwissHacks 2026, AMINA Bank challenge"
+status: "active"
+startDate: "2026-06"
+endDate: ""
+techStack: ["SvelteKit", "TypeScript", "Zod", "pnpm monorepo"]
+interfaces: ["SEC EDGAR", "EventRegistry", "Public AI (Apertus)", "Cloudflare Workers"]
+aiModels: ["Apertus 8B (swiss-ai)", "Apertus 70B (swiss-ai)"]
+liveUrl: "https://sentinel.viktorsharha.com/"
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: "/images/projects/sentinel-cover.png"
+featured: false
+tags: ["Web", "AI", "Fintech", "Hackathon"]
+---
+
+KYC is usually treated as a point-in-time snapshot. Sentinel is built around the
+case that snapshot misses: a customer whose risk does not explode in one obvious
+event, but *drifts* — until the profile they were onboarded with is no longer
+true. It asks one question continuously: "Has this customer structurally become a
+different risk than the one we onboarded?"
+
+We built it at **SwissHacks 2026** for **AMINA Bank's** challenge.
+
+## What it does
+
+Sentinel watches a bank's customer book against public and internal signals and
+scores drift across five KYC axes: business model, ownership/control,
+jurisdiction, scale/activity, and reputation. Every source — SEC filings, news,
+market and on-chain fixtures, sanctions/PEP samples, relationship data — is
+normalised into one Zod-validated `Signal` contract before it is scored.
+
+The flagship demo follows Allbirds becoming *NewBird AI*, then *Smartbird*: a
+low-risk footwear company that pivots into AI/GPU infrastructure, sells its
+original business, changes leadership, and trips a pattern match against
+documented "hot-sector pivot" precedents.
+
+## The idea that makes it cheap
+
+Running an LLM over every public signal for every customer would be ruinously
+expensive, so the cost story is structural — a cascade that only spends money
+where risk actually moves:
+
+- **Stage 0** — entity match, dedupe, deterministic routing.
+- **Stage 1** — cheap deterministic drift scoring (recency, clustering,
+  confidence, source quality).
+- **Stage 2** — per-axis LLM reasoning, *only* for axes that moved.
+- **Stage 3** — deep synthesis, *only* for customers that cross the alert
+  threshold.
+
+A stable customer costs roughly nothing after ingestion; expensive reasoning
+scales with genuine drift, not with book size or news volume. Offline LLM runs
+default to **Apertus**, Switzerland's open sovereign model, through Public AI's
+OpenAI-compatible endpoint.
+
+## Explainable by construction
+
+Every evaluation, escalation decision, alert and human action lands in an
+append-only audit log. Alerts ship with citations, recommended actions,
+pattern-library priors, and token/cost accounting — so a reviewer sees not just
+*that* a customer drifted, but why, and what it cost to find out.
+
+The deployed demo replays captured Stage 2/3 analyses from versioned data, so it
+is fast, deterministic and safe to host publicly, while the live connectors and
+LLM stay available offline for fixture generation.
+
+## Status
+
+A hackathon prototype, not a production compliance system — the repository is
+public so the engineering can be inspected: schemas, connectors, five-axis
+scoring, the escalation pipeline, and the captured analysis trail.
