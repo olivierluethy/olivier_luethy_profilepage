@@ -53,8 +53,8 @@ export function Hero() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <ActionLink href={site.resumeUrl} variant="primary" download>
-                Resume
+              <ActionLink href="/resume" variant="primary">
+                Résumé
               </ActionLink>
               <ActionLink href="/contact">Contact</ActionLink>
               <ActionLink href={linkedin.href} external>

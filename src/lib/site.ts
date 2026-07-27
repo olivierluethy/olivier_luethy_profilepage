@@ -71,6 +71,7 @@ export const heroStats: readonly { value: string; label: string }[] = [
 /** Top-level routes in the nav. In-page section links are added in Phase 2. */
 export const navLinks: readonly NavLink[] = [
   { label: "Work", href: "/#work" },
+  { label: "Résumé", href: "/resume" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ] as const;
