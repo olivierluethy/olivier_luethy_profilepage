@@ -50,6 +50,12 @@ const TECH_TO_ICON: Record<string, string> = {
   Flyway: "siFlyway",
   Xamarin: "siXamarin",
   Ionic: "siIonic",
+  ".NET": "siDotnet",
+  "ASP.NET Core 8": "siDotnet",
+  "Entity Framework Core": "siDotnet",
+  "Framer Motion": "siFramer",
+  Java: "siOpenjdk",
+  "Java 21": "siOpenjdk",
 };
 
 export interface TechIcon {
