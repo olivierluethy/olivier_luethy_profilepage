@@ -1,0 +1,32 @@
+---
+title: "LinkedIn Downvote Engine"
+slug: "linkedin-downvote"
+summary: "Chrome extension that adds a native downvote button to LinkedIn, letting you grey out or hide posts you don't want in your feed."
+role: "Solo developer — build, Chrome Web Store publishing"
+status: "active"
+startDate: "2025-11"
+endDate: ""
+techStack: ["JavaScript", "Chrome Extension APIs"]
+interfaces: ["LinkedIn"]
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/BaskLash/LinkedIn-Downvote"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Chrome Extension", "Productivity"]
+---
+
+LinkedIn has a like button but no downvote. This extension adds one — a native
+downvote on every post that lets you grey out or hide the things you'd rather
+not see, so your feed drifts toward what you actually want.
+
+## How it works
+
+LinkedIn's feed loads asynchronously and never stops re-rendering, so the button
+is injected through a `MutationObserver` that keeps up as new posts stream in on
+infinite scroll. There's no server: the posts you've downvoted and your filter
+preferences are kept locally in Chrome Storage. It's open-source, with 10+
+weekly users.
+
+The code is on [GitHub](https://github.com/BaskLash/LinkedIn-Downvote).
