@@ -21,14 +21,14 @@ export interface DroneBuild {
 export const droneBuilds: readonly DroneBuild[] = [
   {
     id: "freestyle-build",
-    title: "5-inch freestyle build",
+    title: "5-inch freestyle quad",
     description:
-      "One of my FPV freestyle quads on the bench — a RunCam camera, a Mamba F405 stack and TBS Crossfire, held together with my own purple 3D-printed camera and antenna mounts. Soldered and configured in Betaflight.",
-    image: "/images/maker/drones/drone-build-1.jpg",
+      "One of my FPV freestyle quads, built by hand and shown here finished — a RunCam camera in my own purple 3D-printed mount, a Mamba F405 stack and TBS Crossfire on a carbon frame, with a glimpse of the bench build.",
+    image: "/images/maker/drones/drone-build-full-1.jpg",
     gallery: [
-      "/images/maker/drones/drone-build-2.jpg",
-      "/images/maker/drones/drone-build-3.jpg",
-      "/images/maker/drones/drone-build-4.jpg",
+      "/images/maker/drones/drone-build-full-2.jpg",
+      "/images/maker/drones/drone-build-1.jpg",
+      "/images/maker/drones/drone-build-full-3.jpg",
     ],
     tools: ["Betaflight", "Soldering", "Fusion 360"],
   },

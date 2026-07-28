@@ -66,8 +66,8 @@ export function Maker() {
         The drones themselves
       </h3>
       <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-muted">
-        Two different FPV freestyle quads I built — one caught mid-build on the
-        bench, the other finished and ready to fly.
+        Two different FPV freestyle quads I built and fly — each running
+        3D-printed parts I designed myself.
       </p>
       <ul className="mt-8 grid gap-6 sm:grid-cols-2">
         {droneBuilds.map((build, index) => (
