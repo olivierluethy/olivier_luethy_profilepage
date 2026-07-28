@@ -1,0 +1,41 @@
+---
+title: "ClipVault"
+slug: "clipvault"
+summary: "Native clipboard manager for Linux, built in Rust and Tauri — captures text, links, colours and images locally and stays out of the way at ~10–20 MB idle."
+role: "Solo developer — systems architecture, Rust core, React UI"
+status: "active"
+startDate: "2026-07"
+endDate: ""
+techStack: ["Rust", "Tauri", "React", "TypeScript", "SQLite", "Vite", "Tailwind CSS"]
+interfaces: ["X11 / XFIXES"]
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Desktop", "Rust", "Linux", "Open Source"]
+---
+
+ClipVault is a clipboard manager for Ubuntu and Linux that remembers everything
+you copy — text, links, colours, images, GIFs — and lets you get any of it back
+without leaving the keyboard. It's built to be invisible until you need it,
+sitting at roughly 10–20 MB of RAM and 0% CPU while idle.
+
+## The core
+
+The backend is Rust. It watches the X11 clipboard through XFIXES over thread
+channels — an event-driven approach rather than polling — and it's careful about
+the awkward parts: it rebuilds itself cleanly when the X server restarts, and it
+suppresses its own copies so it never loops on itself. Everything is stored in
+SQLite in WAL mode, with SHA-256 content hashing to deduplicate entries in real
+time, WebP thumbnails for images, and history grouped by day in your own
+timezone.
+
+## The interface
+
+The Rust core talks to a React 19 frontend over a typed IPC layer, and wires up
+the OS bits you'd expect from a native app: a system-tray icon, a global hotkey
+(Ctrl+Alt+V), an autostart daemon and a single-instance guard. The dashboard is
+a fast, dark, keyboard-first UI that uses `@tanstack/react-virtual` to stay
+smooth even scrolling through an enormous clipboard history.
