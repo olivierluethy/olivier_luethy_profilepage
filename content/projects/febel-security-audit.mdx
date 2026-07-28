@@ -1,0 +1,40 @@
+---
+title: "Web Security Audit — febel.ch"
+slug: "febel-security-audit"
+summary: "An authorised white-hat audit of febel.ch's comment and form endpoints — found a reCAPTCHA v3 bypass and a DoS vector, then helped harden them."
+role: "White-hat penetration tester"
+status: "archived"
+startDate: "2025-12"
+endDate: "2025-12"
+techStack: ["JavaScript", "Tampermonkey", "PHP", "Chromedriver"]
+interfaces: []
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Security", "Pentest"]
+---
+
+An authorised security audit of febel.ch, focused on its comment and form
+endpoints — how spam-resistant they were, and whether the protections in front
+of them could be walked around. Everything below was done with permission, and
+ended with the holes closed.
+
+## What I found
+
+I started by watching the client- and server-side traffic and reverse-engineering
+the flow between the page's `getcomments.js` and the `save.php` endpoint behind
+it. That surfaced the main issue: the server wasn't fully validating the Google
+reCAPTCHA v3 token, so the check could be satisfied without really passing it. I
+proved it with a Tampermonkey script that submitted spam automatically, and used
+Chrome for Testing (Chromedriver) to push the rate limits and see how the backend
+held up. I also showed a denial-of-service angle — injecting payloads into the
+file-based `data.json` store degraded how the frontend parsed and rendered it.
+
+## Remediation
+
+I documented each finding and stayed on through the fixes: verifying the secret
+key with Google server-side, sanitising input, and hardening the storage logic.
+A follow-up pass confirmed the endpoints held afterwards.
