@@ -54,7 +54,7 @@ function parseProject(fileName: string): Project {
     linkedinPostUrl: optionalString(fm, "linkedinPostUrl", fileName),
     formerUrl: optionalString(fm, "formerUrl", fileName),
     favicon,
-    coverImage: requireString(fm, "coverImage", fileName),
+    coverImage: optionalString(fm, "coverImage", fileName),
     featured: optionalBoolean(fm, "featured", fileName),
     tags: optionalStringArray(fm, "tags", fileName),
   };
