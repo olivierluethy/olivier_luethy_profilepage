@@ -123,7 +123,10 @@ export function DroneFlyover() {
                 delay: f.delay,
               }}
             >
-              <DroneQuad className="h-auto w-full" />
+              <DroneQuad
+                className="h-auto w-full"
+                style={{ transform: f.dir < 0 ? "scaleX(-1)" : undefined }}
+              />
             </motion.div>
             {f.tracked ? <Lock size={f.size} /> : null}
           </div>

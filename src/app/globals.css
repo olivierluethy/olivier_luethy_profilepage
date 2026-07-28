@@ -166,21 +166,26 @@
 /* ---------------------------------------------------------------------------
    FPV drone flyover
 
-   Props spin via CSS so the reduced-motion block above stops them for free.
-   `transform-box: fill-box` scopes each prop group's rotation to its own
-   centre inside the SVG.
+   The props are seen edge-on from the side, so they read as spinning by
+   flickering thin rather than rotating in plane. `transform-box: fill-box`
+   scopes the squash to each disc; the reduced-motion block above stops it.
 --------------------------------------------------------------------------- */
 
-@keyframes drone-prop-spin {
+@keyframes drone-prop-blur {
+  from {
+    transform: scaleY(1);
+    opacity: 1;
+  }
   to {
-    transform: rotate(1turn);
+    transform: scaleY(0.55);
+    opacity: 0.65;
   }
 }
 
 .drone-prop {
   transform-box: fill-box;
   transform-origin: center;
-  animation: drone-prop-spin 0.4s linear infinite;
+  animation: drone-prop-blur 0.11s linear infinite alternate;
 }
 
 /* ---------------------------------------------------------------------------
