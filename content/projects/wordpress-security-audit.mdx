@@ -1,0 +1,32 @@
+---
+title: "WordPress Security Audit"
+slug: "wordpress-security-audit"
+summary: "A full authorised vulnerability assessment of a live WordPress site — identified critical third-party plugin flaws and verified the fixes afterwards."
+role: "White-hat security auditor"
+status: "archived"
+startDate: "2025-03"
+endDate: "2025-03"
+techStack: ["Kali Linux", "WPScan"]
+interfaces: []
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Security", "Pentest"]
+---
+
+An authorised vulnerability assessment of a production WordPress site. The goal
+was to find the real risks — mostly hiding in third-party components — and then
+see the site hardened, with permission throughout.
+
+## The work
+
+I mapped the attack surface using Kali Linux and WPScan-style enumeration to find
+outdated core and plugin versions, then analysed and verified the known CVEs
+against them — including a potential remote code execution and an admin-context
+authentication bypass. The output was a detailed report with risk ratings and
+concrete remediation steps for the site owner. After patching, I ran a re-audit
+to confirm the fixes held and the site was in a genuinely better state than when
+I started.
