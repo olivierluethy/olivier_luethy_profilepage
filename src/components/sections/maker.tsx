@@ -24,7 +24,7 @@ export function Maker() {
       lede="FPV freestyle quads I build and tune myself, and the parts I design in Fusion 360 and print on my Creality when the off-the-shelf version keeps breaking. Each print below went through several iterations — open one to orbit every version."
       backdrop={<DroneFlyover />}
     >
-      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         {fusion.map((project, index) => {
           const final = project.versions[project.versions.length - 1];
           return (
@@ -64,14 +64,14 @@ export function Maker() {
         })}
       </ul>
 
-      <h3 className="mt-14 font-display text-display-sm font-bold">
+      <h3 className="mt-10 font-display text-display-sm font-bold sm:mt-14">
         The drones themselves
       </h3>
       <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-muted">
         Three quads I built and fly — two freestyle and one set up for racing —
         each running 3D-printed parts I designed myself.
       </p>
-      <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         {droneBuilds.map((build, index) => (
           <li key={build.id}>
             <Reveal delay={index * 0.08} className="h-full">

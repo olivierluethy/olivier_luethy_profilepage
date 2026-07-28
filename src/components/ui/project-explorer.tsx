@@ -29,6 +29,9 @@ export interface ProjectExplorerProps {
 export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) {
   const [sort, setSort] = useState<SortKey>("newest");
   const [filter, setFilter] = useState<string | null>(null);
+  // Filters open collapsed so 31 projects are the first thing on screen, not a
+  // wall of pills. Expanded on demand.
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   // The tech grid higher up the page filters this list by dispatching an event,
   // then we scroll the list into view so the result is visible immediately.
@@ -111,84 +114,136 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
     );
   };
 
+  const hasFilters = tags.length > 0 || tech.length > 0;
+
   return (
     <div>
-      <div className="flex flex-col gap-6 border-y border-line py-6">
-        <div className="flex flex-wrap items-center gap-3">
-          <span
-            className="font-mono text-hud uppercase text-faint"
-            id="sort-label"
-          >
-            Sort
-          </span>
-          <div
-            role="group"
-            aria-labelledby="sort-label"
-            className="flex gap-1 rounded-full border border-line bg-panel p-1"
-          >
-            {SORTS.map((option) => (
-              <button
-                key={option.key}
-                type="button"
-                onClick={() => setSort(option.key)}
-                aria-pressed={sort === option.key}
-                className={`rounded-full px-3 py-1.5 font-mono text-hud uppercase transition-colors ${
-                  sort === option.key
-                    ? "bg-signal text-[#0B0F14]"
-                    : "text-muted hover:text-signal-ink"
-                }`}
+      {/* Light control strip: one Filter disclosure, active filter, sort, count. */}
+      <div className="flex flex-col gap-3 border-y border-line py-4">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          {hasFilters ? (
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((open) => !open)}
+              aria-expanded={filtersOpen}
+              aria-controls="project-filters"
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-hud uppercase transition-colors ${
+                filtersOpen || filter
+                  ? "border-signal/50 text-signal-ink"
+                  : "border-line bg-panel text-muted hover:border-signal/50 hover:text-signal-ink"
+              }`}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3.5">
+                <path
+                  d="M3 5h18M6 12h12M10 19h4"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
+              Filter
+              <span
+                aria-hidden="true"
+                className={`transition-transform duration-200 ${filtersOpen ? "rotate-180" : ""}`}
               >
-                {option.label}
-              </button>
-            ))}
-          </div>
+                ▾
+              </span>
+            </button>
+          ) : null}
 
-          <span className="ml-auto font-mono text-hud uppercase text-faint">
-            {visible.length} of {projects.length}
-          </span>
+          {/* Active filter stays visible even while the panel is collapsed. */}
+          {filter ? (
+            <button
+              type="button"
+              onClick={() => setFilter(null)}
+              className="inline-flex items-center gap-1.5 rounded-full border border-signal bg-signal px-3 py-1.5 font-mono text-hud uppercase text-[#0B0F14]"
+            >
+              {filter}
+              <span aria-hidden="true" className="text-sm leading-none">
+                ×
+              </span>
+            </button>
+          ) : null}
+
+          <div className="ml-auto flex items-center gap-2.5">
+            <div
+              role="group"
+              aria-label="Sort projects"
+              className="flex gap-1 rounded-full border border-line p-0.5"
+            >
+              {SORTS.map((option) => (
+                <button
+                  key={option.key}
+                  type="button"
+                  onClick={() => setSort(option.key)}
+                  aria-pressed={sort === option.key}
+                  className={`rounded-full px-2.5 py-1 font-mono text-hud uppercase transition-colors ${
+                    sort === option.key
+                      ? "bg-signal-wash text-signal-ink"
+                      : "text-faint hover:text-signal-ink"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+
+            <span className="font-mono text-hud uppercase text-faint">
+              {visible.length}/{projects.length}
+            </span>
+          </div>
         </div>
 
-        {tags.length > 0 ? (
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="mr-1 font-mono text-hud uppercase text-faint">
-              Tags
-            </span>
-            {tags.map(chip)}
-          </div>
-        ) : null}
+        {/* Expanded filter panel — collapsed by default. */}
+        {filtersOpen && hasFilters ? (
+          <div id="project-filters" className="flex flex-col gap-3 pt-1">
+            {tags.length > 0 ? (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="mr-1 font-mono text-hud uppercase text-faint">
+                  Tags
+                </span>
+                {tags.map(chip)}
+              </div>
+            ) : null}
 
-        {tech.length > 0 ? (
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="mr-1 font-mono text-hud uppercase text-faint">
-              Tech
-            </span>
-            {tech.map(techChip)}
+            {tech.length > 0 ? (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="mr-1 font-mono text-hud uppercase text-faint">
+                  Tech
+                </span>
+                {tech.map(techChip)}
+              </div>
+            ) : null}
           </div>
         ) : null}
       </div>
 
-      <div aria-live="polite" className="mt-8 space-y-4">
+      <div
+        aria-live="polite"
+        className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      >
         {visible.map((project) => (
           <ProjectCard
             key={project.frontmatter.slug}
             project={project}
-            variant="compact"
+            variant="grid"
           />
         ))}
-
-        {visible.length === 0 ? (
-          <p className="rounded-lg border border-dashed border-line px-5 py-10 text-center text-muted">
-            Nothing tagged &ldquo;{filter}&rdquo; yet.{" "}
-            <button
-              type="button"
-              onClick={() => setFilter(null)}
-              className="text-signal-ink underline underline-offset-4"
-            >
-              Show all projects
-            </button>
-          </p>
-        ) : null}
       </div>
+
+      {visible.length === 0 ? (
+        <p className="mt-6 rounded-lg border border-dashed border-line px-5 py-10 text-center text-muted">
+          Nothing tagged &ldquo;{filter}&rdquo; yet.{" "}
+          <button
+            type="button"
+            onClick={() => setFilter(null)}
+            className="text-signal-ink underline underline-offset-4"
+          >
+            Show all projects
+          </button>
+        </p>
+      ) : null}
     </div>
   );
 }
