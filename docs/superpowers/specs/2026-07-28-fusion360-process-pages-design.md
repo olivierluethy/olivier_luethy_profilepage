@@ -176,6 +176,26 @@ and `Vorgehen.txt` are German.
 - **Accessibility:** viewer has an `alt`/description; version switcher is
   keyboard-navigable; reduced-motion respected.
 
+## Addendum — SwissHacks 2024 ceremony photos
+
+A small, separate addition bundled into the same implementation plan.
+
+Two winning-ceremony photos were added at
+`public/images/swisshack-2024/SN_08616_1.jpg` and `SN_08698_1.jpg`. They should
+appear on the **SwissHacks 2024 card** in the Hackathons section
+(`hackathons.ts` / `hackathons.tsx`), which currently reuses a generic image
+(`swiss-ai-hack.png`, shared with the 2026 entry).
+
+Approach — **cover + photo strip**:
+
+- Use one ceremony photo as the card's main cover image, replacing the generic
+  one for the `swisshacks-2024` entry.
+- Add an optional `photos?: string[]` field to the `Hackathon` interface. When
+  present, render a small thumbnail strip (both ceremony shots) below the cover.
+- Only cards with `photos` render the strip; all other cards are unchanged.
+- Accessibility: meaningful `alt` text on each photo; the strip is not
+  interactive in this iteration (no lightbox).
+
 ## Success criteria
 
 - Each of the 4 projects has a working `/maker/[slug]` page.
@@ -186,3 +206,5 @@ and `Vorgehen.txt` are German.
   future stethoscope-hook project.
 - Adding the deferred assets later requires only data edits, not structural
   changes.
+- The SwissHacks 2024 card shows a real ceremony photo as its cover plus a
+  thumbnail strip of both ceremony shots; other hackathon cards are unchanged.
