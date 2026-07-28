@@ -9,8 +9,11 @@ import type { ProjectSummary } from "@/lib/content/types";
 
 export interface ProjectCardProps {
   project: ProjectSummary;
-  /** `featured` gets the cover image and more room; `compact` is list density. */
-  variant?: "featured" | "compact";
+  /**
+   * `featured` gets the cover image and more room; `compact` is a horizontal
+   * list row; `grid` is a dense vertical tile for the scannable gallery.
+   */
+  variant?: "featured" | "compact" | "grid";
   /** Featured cards render an <h3> by default; the grid may need <h4>. */
   priority?: boolean;
 }
@@ -26,6 +29,62 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const { frontmatter, dateRange } = project;
   const href = `/projects/${frontmatter.slug}`;
+
+  if (variant === "grid") {
+    return (
+      <Link
+        href={href}
+        className="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-panel transition-all duration-300 hover:-translate-y-1 hover:border-signal/50 hover:shadow-panel"
+      >
+        <div className="relative aspect-video overflow-hidden border-b border-line">
+          <CoverArt
+            coverImage={frontmatter.coverImage}
+            favicon={frontmatter.favicon}
+            title={frontmatter.title}
+            sizes="(min-width: 1024px) 360px, (min-width: 768px) 45vw, 100vw"
+          />
+          <Reticle className="absolute right-3 top-3 size-4 text-signal opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        </div>
+
+        <div className="flex flex-1 flex-col p-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <StatusPill status={frontmatter.status} />
+            <span className="font-mono text-hud uppercase text-faint">
+              {dateRange}
+            </span>
+          </div>
+
+          <div className="mt-2.5 flex items-center gap-2">
+            {frontmatter.favicon ? (
+              <Image
+                src={frontmatter.favicon}
+                alt=""
+                width={18}
+                height={18}
+                unoptimized
+                className="size-[18px] shrink-0 rounded"
+              />
+            ) : null}
+            <h3 className="text-balance font-display text-base font-semibold leading-tight transition-colors group-hover:text-signal-ink">
+              {frontmatter.title}
+            </h3>
+          </div>
+          <p className="mt-1.5 line-clamp-2 flex-1 text-pretty text-xs leading-relaxed text-muted">
+            {frontmatter.summary}
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-1">
+            {frontmatter.techStack.slice(0, 3).map((tech) => (
+              <Badge key={tech}>{tech}</Badge>
+            ))}
+            {frontmatter.techStack.length > 3 ? (
+              <Badge tone="outline">+{frontmatter.techStack.length - 3}</Badge>
+            ) : null}
+          </div>
+        </div>
+      </Link>
+    );
+  }
 
   if (variant === "compact") {
     return (

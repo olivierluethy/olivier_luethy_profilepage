@@ -38,7 +38,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={`scroll-mt-nav border-t border-line py-14 sm:py-24 lg:py-28 ${
+      className={`scroll-mt-nav border-t border-line py-10 sm:py-20 lg:py-24 ${
         backdrop ? "relative isolate overflow-hidden" : ""
       } ${className}`}
     >
@@ -66,7 +66,7 @@ export function Section({
           ) : null}
         </Reveal>
 
-        <div className="mt-10 sm:mt-12">{children}</div>
+        <div className="mt-8 sm:mt-10">{children}</div>
       </div>
     </section>
   );
