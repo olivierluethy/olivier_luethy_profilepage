@@ -28,8 +28,10 @@ Four projects, each with its own process page:
 3. **Drone upper mount** — protective top mount for a self-built FPV drone
    (`oberhalterung`). The richest process story: a written `Vorgehen.txt` log,
    ~10 STL iterations, a hole-sizing prototype trick, and a late antenna cutout.
-4. **Switchback nano mount** — mount design (`switchback-pro`). 7 versions and
-   6 process photos.
+4. **Switchback nano mount** — a camera holder for a self-built FPV drone that
+   had no proper camera mount (`switchback-pro`). It clamps **between two
+   rails/lines** and has **holes on the sides to bolt the camera in place**, so
+   the camera can't shift or fly off mid-flight. 7 versions and 6 process photos.
 
 ### Deferred (design must leave room; filled when assets arrive)
 
@@ -154,8 +156,9 @@ Source material per project:
 - **Drone upper mount:** `oberhalterung` — the "Loch" series (flat surface →
   hole-size prototype → corrected holes → side walls → antenna cutout). Draft
   directly from `Vorgehen.txt`. 2 photos.
-- **Switchback nano mount:** `switchback-pro` — Nano Mount v1–v7 + Custom.
-  6 photos.
+- **Switchback nano mount:** `switchback-pro` — Nano Mount v1–v7 + Custom. A
+  camera holder clamping between two rails with side holes to bolt the camera
+  down so it stays fixed in flight. 6 photos.
 
 All narrative is in **English** (site language), even though source filenames
 and `Vorgehen.txt` are German.
