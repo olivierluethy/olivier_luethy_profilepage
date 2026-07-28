@@ -32,6 +32,7 @@ export interface ProjectFrontmatter {
   formerUrl: string;
   /** Self-hosted site icon (favicon), or "" when the project has none. Derived from the slug. */
   favicon: string;
+  /** Banner image path, or "" — cards/preview fall back to the logo then a monogram. */
   coverImage: string;
   featured: boolean;
   tags: string[];

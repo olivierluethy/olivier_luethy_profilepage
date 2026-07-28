@@ -112,6 +112,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <LivePreview
             url={frontmatter.liveUrl}
             coverImage={frontmatter.coverImage}
+            favicon={frontmatter.favicon}
             title={frontmatter.title}
             embeddable={embeddable}
           />

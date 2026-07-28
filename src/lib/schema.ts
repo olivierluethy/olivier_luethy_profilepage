@@ -41,13 +41,15 @@ export function projectSchema(project: Project): Record<string, unknown> {
     name: frontmatter.title,
     description: frontmatter.summary,
     url: absoluteUrl(`/projects/${frontmatter.slug}`),
-    image: absoluteUrl(frontmatter.coverImage),
     applicationCategory: "DeveloperApplication",
     operatingSystem: frontmatter.techStack.join(", "),
     author: { "@type": "Person", name: site.name, url: absoluteUrl("/") },
     keywords: frontmatter.tags.join(", "),
     dateCreated: frontmatter.startDate,
     ...(frontmatter.endDate ? { dateModified: frontmatter.endDate } : {}),
+    ...(frontmatter.coverImage
+      ? { image: absoluteUrl(frontmatter.coverImage) }
+      : {}),
     ...(liveUrl ? { installUrl: liveUrl } : {}),
     ...(sameAs.length > 0 ? { sameAs } : {}),
   };
