@@ -1,55 +1,36 @@
 /**
- * Physical builds: FPV drones, 3D printing and CAD.
+ * Physical builds shown in the homepage "Make" section.
  *
- * An entry with a `model` renders an interactive <model-viewer> instead of a
- * photo. Export from Fusion 360 as .glb or .gltf into /public/models.
+ * Fusion 360 CAD projects come from `@/lib/data/fusion` (each links to its own
+ * process page). This file holds only the non-CAD builds: the FPV freestyle
+ * drones. Photo slots are reserved even before the photo exists so the layout
+ * is stable — drop the images in at these paths to fill them.
  */
 
-export interface MakerBuild {
+export interface DroneBuild {
   id: string;
   title: string;
   description: string;
-  /** Photo of the build. Always present — the 3D model is additive. */
+  /** Photo under /public. May not exist yet; layout reserves the slot. */
   image: string;
-  /** Optional path under /public to a .glb or .gltf file. */
-  model?: string;
-  /** Tools and parts worth naming. */
   tools: string[];
 }
 
-export const makerBuilds: readonly MakerBuild[] = [
+export const droneBuilds: readonly DroneBuild[] = [
   {
-    id: "freestyle",
-    title: "Self-built FPV freestyle quads",
+    id: "freestyle-1",
+    title: "FPV freestyle quad",
     description:
-      "FPV drones I build and configure myself, with a focus on freestyle flying. Tuning them is where the real learning happens.",
-    image: "/images/maker/freestyle-build.png",
-    tools: ["Betaflight", "Soldering", "Carbon fibre", "Fusion 360"],
+      "One of the FPV freestyle drones I build and tune myself — soldered, configured in Betaflight, and flown until something teaches me the next fix.",
+    image: "/images/maker/fpv-freestyle-1.jpg",
+    tools: ["Betaflight", "Soldering", "FPV"],
   },
   {
-    id: "fusion-parts",
-    title: "FPV parts, designed in Fusion 360",
+    id: "freestyle-2",
+    title: "FPV freestyle quad",
     description:
-      "Custom drone components I design in Autodesk Fusion 360 when the off-the-shelf part keeps breaking, then print and iterate on until they survive the crash.",
-    image: "/images/maker/camera-mount.png",
-    // [[Replace with a real Fusion 360 export (.glb/.gltf) in /public/models.]]
-    model: "/models/placeholder-part.gltf",
-    tools: ["Fusion 360", "Cura", "PETG"],
-  },
-  {
-    id: "bird-feeder",
-    title: "3D-printed bird-feeder bowl",
-    description:
-      "An ongoing print: a self-designed bird-feeder bowl in transparent biodegradable PLA, finished with a food-safe epoxy resin coating — designed and manufactured independently.",
-    image: "/images/maker/tinywhoop.png",
-    tools: ["Fusion 360", "PLA", "Epoxy resin"],
-  },
-  {
-    id: "print-workflow",
-    title: "3D-printing workflow",
-    description:
-      "My printing setup: slicing in Ultimaker Cura and running prints remotely through OctoPrint on a Raspberry Pi.",
-    image: "/images/maker/print-farm.png",
-    tools: ["Ultimaker Cura", "OctoPrint", "Raspberry Pi", "PLA"],
+      "Another freestyle build. When an off-the-shelf part keeps breaking, I design a replacement in Fusion 360 and print it on my Creality.",
+    image: "/images/maker/fpv-freestyle-2.jpg",
+    tools: ["Fusion 360", "Creality", "FPV"],
   },
 ] as const;

@@ -1,0 +1,14 @@
+Zuerst habe ich versucht, eine Fläche mit den Löchern richtig zu machen. Ich habe die Fläche flach angefangen.
+Aber das Problem war, dass ich von den etwas schwierigeren Stellen, was die Löcher letztendlich waren, zumindest ihre Größe schwer zu messen war, also musste ich diese Maße raten. Ich druckte zweimal die Oberfläche mit den Löchern und zweimal verschiedene Massen für die Löcher.
+
+Später entschied ich mich, einen Prototyp zu drucken, also eine kleine Fläche, in der nur noch das Loch war, um erstens schneller drucken zu können und auch schneller herauszufinden, welches Maß richtig ist.
+
+Als ich durch dieses Verfahren das richtige Mass viel schneller herausgefunden hatte, nahm ich wieder die alte Fläche und passte deren Durchmesser für die Löcher mit den richtigen Massen an.
+
+Der Abstand vom linken zum rechten Loch war gleich beim ersten Mal richtig, da ich auch diesen mit einem Messschieber richtig messen konnte.
+
+So hatte ich die Fläche mit den richtigen Löchern.
+
+Danach musste ich nur noch die Seitenvergrößerungen machen, so wie hinten die Bucht für die Positionierung der Antenne, was nicht kompliziert war, weil man da auch nicht genau sein musste. Es hätte auch größer sein können. So musste ich die Aussparung für die Antenne zweimal bauen und korrigieren, aber die Innenhalterung mit den Wänden und den zwei Löchern, die die Länge der Fläche durch drei teilen, um die mittlere kleine Seitenfläche herauszuschneiden, stimmte beim ersten Guss. Aber die Länge der Seitenwände musste ich nur einmal anpassen, damit es für meine Augen stimmte.
+
+Die Einsparung für die Antenne habe ich ganz am Schluss gemacht.
