@@ -48,6 +48,25 @@ export function Hackathons() {
                   ) : null}
                 </div>
 
+                {event.photos ? (
+                  <ul className="flex gap-2 border-b border-line p-3">
+                    {event.photos.map((photo) => (
+                      <li
+                        key={photo}
+                        className="relative aspect-[4/3] w-1/2 overflow-hidden rounded-md border border-line"
+                      >
+                        <Image
+                          src={photo}
+                          alt={`${event.event} — ceremony photo`}
+                          fill
+                          sizes="(min-width: 1024px) 190px, 40vw"
+                          className="object-cover"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+
                 <div className="flex flex-1 flex-col p-5">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-hud uppercase text-faint">
                     <span>{event.date}</span>

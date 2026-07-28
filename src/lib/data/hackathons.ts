@@ -13,6 +13,8 @@ export interface Hackathon {
   won: boolean;
   description: string;
   image: string;
+  /** Extra photos (e.g. award ceremony). Renders a thumbnail strip when set. */
+  photos?: string[];
   /** Team size including you. */
   teamSize: number;
   url: string;
@@ -76,7 +78,11 @@ export const hackathons: readonly Hackathon[] = [
     won: true,
     description:
       "A zero-latency document-intelligence platform on a RAG architecture — Pinecone vector search, OpenAI generation, and a three-column KPI/document/chat dashboard. Won both the Unique Challenge and the Overall Hackathon.",
-    image: "/images/hackathons/swiss-ai-hack.png",
+    image: "/images/swisshack-2024/SN_08698_1.jpg",
+    photos: [
+      "/images/swisshack-2024/SN_08698_1.jpg",
+      "/images/swisshack-2024/SN_08616_1.jpg",
+    ],
     teamSize: 4, // [[confirm team size]]
     url: "",
     projectSlug: "document-intelligence",
