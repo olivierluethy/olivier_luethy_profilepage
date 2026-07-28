@@ -45,4 +45,17 @@ export const droneBuilds: readonly DroneBuild[] = [
     ],
     tools: ["Creality", "Carbon fibre", "FPV"],
   },
+  {
+    id: "racer",
+    title: "5-inch racing quad",
+    description:
+      "The one I built to race — a light 5-inch quad on XING-2 Pro motors and a carbon frame. The grey top mount and camera housing are my own prints; the top part shares the design of my Fusion 360 upper mount. It flies fast and clean — only the blue antenna and VTX holders are printed parts I didn't design myself.",
+    image: "/images/maker/drones/drone-race-1.jpg",
+    gallery: [
+      "/images/maker/drones/drone-race-2.jpg",
+      "/images/maker/drones/drone-race-3.jpg",
+      "/images/maker/drones/drone-race-4.jpg",
+    ],
+    tools: ["Fusion 360", "Creality", "Racing"],
+  },
 ] as const;

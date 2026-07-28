@@ -66,10 +66,10 @@ export function Maker() {
         The drones themselves
       </h3>
       <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-muted">
-        Two different FPV freestyle quads I built and fly — each running
-        3D-printed parts I designed myself.
+        Three quads I built and fly — two freestyle and one set up for racing —
+        each running 3D-printed parts I designed myself.
       </p>
-      <ul className="mt-8 grid gap-6 sm:grid-cols-2">
+      <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {droneBuilds.map((build, index) => (
           <li key={build.id}>
             <Reveal delay={index * 0.08} className="h-full">
