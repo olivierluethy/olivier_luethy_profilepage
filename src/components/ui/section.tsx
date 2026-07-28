@@ -14,6 +14,11 @@ export interface SectionProps {
   children: ReactNode;
   /** Extra classes on the <section> — used for alternating backgrounds. */
   className?: string;
+  /**
+   * Optional decorative layer rendered behind the content, clipped to the
+   * section. Non-interactive and hidden from assistive tech.
+   */
+  backdrop?: ReactNode;
 }
 
 /**
@@ -27,14 +32,22 @@ export function Section({
   lede,
   children,
   className = "",
+  backdrop,
 }: SectionProps) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={`scroll-mt-nav border-t border-line py-14 sm:py-24 lg:py-28 ${className}`}
+      className={`scroll-mt-nav border-t border-line py-14 sm:py-24 lg:py-28 ${
+        backdrop ? "relative isolate overflow-hidden" : ""
+      } ${className}`}
     >
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      {backdrop ? (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          {backdrop}
+        </div>
+      ) : null}
+      <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal>
           <p className="flex items-center gap-2.5 font-mono text-hud uppercase text-signal-ink">
             <Reticle className="size-4" />
