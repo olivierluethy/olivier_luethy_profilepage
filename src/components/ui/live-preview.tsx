@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { ActionLink } from "@/components/ui/action-link";
+import { CoverArt } from "@/components/ui/cover-art";
 
 /**
  * `refused` comes from the build-time header probe and is a fact.
@@ -17,6 +17,8 @@ export interface LivePreviewProps {
   url: string;
   /** Falls back to this whenever the frame cannot be shown. */
   coverImage: string;
+  /** Project logo, for the fallback when there is no cover banner. */
+  favicon: string;
   title: string;
   /** Result of the build-time header probe. */
   embeddable: boolean;
@@ -43,6 +45,7 @@ const STATUS_COPY: Record<PreviewState, string> = {
 export function LivePreview({
   url,
   coverImage,
+  favicon,
   title,
   embeddable,
 }: LivePreviewProps) {
@@ -98,12 +101,11 @@ export function LivePreview({
             onLoad={() => setState("ready")}
           />
         ) : (
-          <Image
-            src={coverImage}
-            alt={`Preview of ${title}`}
-            fill
+          <CoverArt
+            coverImage={coverImage}
+            favicon={favicon}
+            title={title}
             sizes="(min-width: 1024px) 900px, 100vw"
-            className="object-cover"
           />
         )}
 
