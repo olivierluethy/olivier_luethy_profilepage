@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { getAllPosts } from "@/lib/content/blog";
 import { getAllProjects } from "@/lib/content/projects";
+import { getFusionProjects } from "@/lib/data/fusion";
 import { absoluteUrl } from "@/lib/metadata";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -24,6 +25,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  const maker: MetadataRoute.Sitemap = getFusionProjects().map((project) => ({
+    url: absoluteUrl(`/maker/${project.slug}`),
+    lastModified: now,
+    changeFrequency: "yearly",
+    priority: 0.7,
+  }));
+
   const posts: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
     url: absoluteUrl(`/blog/${post.frontmatter.slug}`),
     lastModified: new Date(post.publishedAt),
@@ -31,5 +39,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...projects, ...posts];
+  return [...staticRoutes, ...projects, ...maker, ...posts];
 }
