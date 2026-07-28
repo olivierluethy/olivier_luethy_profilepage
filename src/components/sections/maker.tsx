@@ -65,6 +65,10 @@ export function Maker() {
       <h3 className="mt-14 font-display text-display-sm font-bold">
         The drones themselves
       </h3>
+      <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-muted">
+        Two different FPV freestyle quads I built — one caught mid-build on the
+        bench, the other finished and ready to fly.
+      </p>
       <ul className="mt-8 grid gap-6 sm:grid-cols-2">
         {droneBuilds.map((build, index) => (
           <li key={build.id}>
@@ -79,6 +83,22 @@ export function Maker() {
                     className="object-cover"
                   />
                 </div>
+                <ul className="flex gap-2 border-b border-line p-3">
+                  {build.gallery.map((photo) => (
+                    <li
+                      key={photo}
+                      className="relative aspect-[4/3] w-1/3 overflow-hidden rounded-md border border-line bg-ground"
+                    >
+                      <Image
+                        src={photo}
+                        alt={`${build.title} — detail`}
+                        fill
+                        sizes="(min-width: 640px) 120px, 30vw"
+                        className="object-cover"
+                      />
+                    </li>
+                  ))}
+                </ul>
                 <div className="flex flex-1 flex-col p-5">
                   <h4 className="text-balance font-display text-lg font-semibold">
                     {build.title}
