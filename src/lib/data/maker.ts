@@ -11,26 +11,38 @@ export interface DroneBuild {
   id: string;
   title: string;
   description: string;
-  /** Photo under /public. May not exist yet; layout reserves the slot. */
+  /** Hero photo under /public. */
   image: string;
+  /** Supporting photos shown as a thumbnail strip. */
+  gallery: string[];
   tools: string[];
 }
 
 export const droneBuilds: readonly DroneBuild[] = [
   {
-    id: "freestyle-1",
-    title: "FPV freestyle quad",
+    id: "freestyle-build",
+    title: "5-inch freestyle build",
     description:
-      "One of the FPV freestyle drones I build and tune myself — soldered, configured in Betaflight, and flown until something teaches me the next fix.",
-    image: "/images/maker/fpv-freestyle-1.jpg",
-    tools: ["Betaflight", "Soldering", "FPV"],
+      "One of my FPV freestyle quads on the bench — a RunCam camera, a Mamba F405 stack and TBS Crossfire, held together with my own purple 3D-printed camera and antenna mounts. Soldered and configured in Betaflight.",
+    image: "/images/maker/drones/drone-build-1.jpg",
+    gallery: [
+      "/images/maker/drones/drone-build-2.jpg",
+      "/images/maker/drones/drone-build-3.jpg",
+      "/images/maker/drones/drone-build-4.jpg",
+    ],
+    tools: ["Betaflight", "Soldering", "Fusion 360"],
   },
   {
-    id: "freestyle-2",
-    title: "FPV freestyle quad",
+    id: "freestyle-finished",
+    title: "5-inch freestyle quad",
     description:
-      "Another freestyle build. When an off-the-shelf part keeps breaking, I design a replacement in Fusion 360 and print it on my Creality.",
-    image: "/images/maker/fpv-freestyle-2.jpg",
-    tools: ["Fusion 360", "Creality", "FPV"],
+      "A different freestyle quad, finished and ready to fly — Velox 2207 motors, tri-blade props and green printed soft-mounts on a carbon frame. When an off-the-shelf part keeps breaking, I design a replacement in Fusion 360 and print it on my Creality.",
+    image: "/images/maker/drones/drone-flight-1.jpg",
+    gallery: [
+      "/images/maker/drones/drone-flight-2.jpg",
+      "/images/maker/drones/drone-flight-3.jpg",
+      "/images/maker/drones/drone-flight-4.jpg",
+    ],
+    tools: ["Creality", "Carbon fibre", "FPV"],
   },
 ] as const;
