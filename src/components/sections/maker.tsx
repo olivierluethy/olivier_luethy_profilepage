@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
+import { DroneFlyover } from "@/components/ui/drone-flyover";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { StlViewer } from "@/components/ui/stl-viewer";
@@ -21,6 +22,7 @@ export function Maker() {
       callsign="Make"
       title="Things that fly, and the parts that hold them together"
       lede="FPV freestyle quads I build and tune myself, and the parts I design in Fusion 360 and print on my Creality when the off-the-shelf version keeps breaking. Each print below went through several iterations — open one to orbit every version."
+      backdrop={<DroneFlyover />}
     >
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {fusion.map((project, index) => {
