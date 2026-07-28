@@ -56,6 +56,12 @@ const TECH_TO_ICON: Record<string, string> = {
   "Framer Motion": "siFramer",
   Java: "siOpenjdk",
   "Java 21": "siOpenjdk",
+  Tauri: "siTauri",
+  npm: "siNpm",
+  Knex: "siKnexdotjs",
+  "discord.py": "siDiscord",
+  Tampermonkey: "siTampermonkey",
+  "Kali Linux": "siKalilinux",
 };
 
 export interface TechIcon {
@@ -76,3 +82,16 @@ export function techIcon(name: string): TechIcon {
   }
   return { name, path: FALLBACK_TECH_PATH, branded: false };
 }
+
+/** Windows has no simple-icons mark (trademark removal); hand-drawn 24×24 flag. */
+const WINDOWS_PATH =
+  "M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801";
+
+/** OS marks for the curated Environment row. Ubuntu/Apple come from simple-icons. */
+export const OS_ICON_PATHS: Record<"Windows" | "Ubuntu" | "macOS", string> = {
+  Windows: WINDOWS_PATH,
+  Ubuntu:
+    (si as Record<string, { path?: string }>).siUbuntu?.path ?? FALLBACK_TECH_PATH,
+  macOS:
+    (si as Record<string, { path?: string }>).siApple?.path ?? FALLBACK_TECH_PATH,
+};

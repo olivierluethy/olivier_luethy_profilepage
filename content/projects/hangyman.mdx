@@ -1,0 +1,32 @@
+---
+title: "Hangyman"
+slug: "hangyman"
+summary: "A Discord bot that turns the classic Hangman word game into a multiplayer experience on a server. Built during my apprenticeship."
+role: "Solo developer — creator & backend"
+status: "archived"
+startDate: "2022-01"
+endDate: "2022-01"
+techStack: ["Python", "discord.py"]
+interfaces: ["Discord"]
+aiModels: []
+liveUrl: ""
+githubUrl: ""
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Bot", "Games"]
+---
+
+Hangyman took the classic word game Hangman off the command line and onto a
+Discord server, so a group could play it together. I built it on my own
+initiative during my apprenticeship.
+
+## How it works
+
+The game logic is in Python — reading letter-by-letter guesses, scoring wrong
+ones, handling the word list, and deciding win or loss. The interesting part was
+the migration: I refactored a local CLI script into an event-driven bot on top
+of `discord.py`, handling asynchronous events so several people could play at
+once without the game tripping over itself. Most of the work was debugging the
+edge cases myself — odd state transitions and invalid inputs that only show up
+once real people are typing.
