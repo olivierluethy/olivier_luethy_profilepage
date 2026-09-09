@@ -1,12 +1,12 @@
 ---
 title: "TuneVote"
 slug: "tunevote"
-summary: "Real-time music voting platform with AI song suggestions and YouTube integration."
-role: "Solo developer — full stack, infrastructure, deployment"
+summary: "Real-time music voting platform I designed, built, and operate end to end — from the Socket.io backend to production architecture, database, and deployment."
+role: "Solo developer — full stack, production architecture, infrastructure, deployment"
 status: "active"
 startDate: "2024-06"
 endDate: ""
-techStack: ["Next.js", "React", "Vite", "Socket.io", "Docker", "Knex"]
+techStack: ["Next.js", "React", "Vite", "Socket.io", "Node.js", "Docker", "Knex", "VPS", "SSH"]
 interfaces: ["OpenAI API", "YouTube (yt-dlp)", "Google OAuth", "Facebook OAuth"]
 aiModels: ["OpenAI GPT-4"]
 liveUrl: "https://tunevote.com"
@@ -18,7 +18,9 @@ tags: ["Web", "AI", "Real-time"]
 ---
 
 TuneVote is a music voting platform: a room votes on what plays next, in real
-time, and the platform suggests songs to add.
+time, and the platform suggests songs to add. I built it independently, end to
+end — not just the application code, but the production architecture, database,
+and deployment that keep it running for real users.
 
 ## The moving parts
 
@@ -29,8 +31,48 @@ time, and the platform suggests songs to add.
 - **YouTube integration** via yt-dlp for resolving tracks.
 - **Sign-in** with Google and Facebook.
 
-It runs in Docker on a VPS, with database schema changes handled through Knex
-migrations rather than by hand. It's open-source, with a Discord community for
+## Running it in production, not just locally
+
+Developing TuneVote locally and *operating* it for real users turned out to be
+two different problems. Once people were connected to the same live session, I
+had to reason about the whole thing as production infrastructure, and make the
+architecture, database, and deployment decisions myself.
+
+**Splitting the infrastructure by what actually needs the server.** The
+real-time Socket.io backend needs a persistent, always-on server, so it runs on
+a VPS. The landing page and frontend do not — serving them from the VPS would
+only spend its resources on work it does not need to do. So I separated the two:
+the VPS is dedicated to the real-time backend, and the static frontend is served
+from dedicated hosting (e.g. Vercel). The result is that the server's resources
+stay focused on the workload that genuinely requires them.
+
+**Finding the real cause of slowness.** When the production system got slow, the
+easy answer would have been "get a faster server." Instead I looked at whether
+the architecture was loading the VPS with work it should not have been carrying
+in the first place. Moving the non-essential frontend/landing-page workload off
+the VPS freed it to concentrate on the real-time backend — an architectural fix
+rather than a hardware one.
+
+**Redesigning the database as part of the system.** The initial schema was not
+well suited to how the app actually used it, so I redesigned it substantially:
+cutting redundancy, storing information more correctly, distributing load more
+evenly, and making the common operations more efficient — so the database adds
+as little avoidable pressure to the overall system as possible as usage grows.
+Schema changes are handled through Knex migrations rather than by hand.
+
+**A test-before-production workflow.** Changes go to a test environment first,
+where the automated tests run against them; only once they pass are they
+released. Production deploys then run through an automated, AI-assisted process
+over SSH to the VPS, so shipping a change is repeatable rather than a manual
+scramble.
+
+The recurring questions were the production ones: what happens when many users
+share one real-time session, which component is quietly consuming resources,
+what could become a bottleneck as the app grows, and how to improve the
+architecture proactively rather than waiting for a production failure to force
+the issue.
+
+It runs in Docker on a VPS. It's open-source, with a Discord community for
 feature requests and bug reports, and around 30 active users.
 
 ## The sub-project that made it work: a YouTube scraping funnel
