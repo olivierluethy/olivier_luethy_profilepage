@@ -31,10 +31,10 @@ export const site = {
   name: "Olivier Lüthy",
   /** Shown under the name in the hero. */
   tagline:
-    "Software developer with an AI-first focus — production AI tools, from RAG pipelines to Chrome extensions used by thousands.",
+    "Software developer with an AI-first focus — from RAG pipelines and Chrome extensions used by thousands to architecting, deploying, and operating a real-time app in production.",
   /** Used as the default meta description and in the footer. */
   description:
-    "Software developer with an AI-first mindset and a passion for building things. Overall winner of SwissHacks 2024 with a production RAG pipeline, and developer of AI-integrated Chrome extensions used by thousands. Based in Lucerne, Switzerland.",
+    "Software developer with an AI-first mindset and a passion for building things. Overall winner of SwissHacks 2024 with a production RAG pipeline, and developer of AI-integrated Chrome extensions used by thousands. Independently architects, deploys, and operates applications in production — including TuneVote, a real-time app running on a self-managed VPS. Based in Lucerne, Switzerland.",
   /** No trailing slash. Drives canonical URLs, sitemap and OG images. */
   url: "https://olivierluethy.com",
   locale: "en_US",
@@ -49,7 +49,7 @@ export const site = {
   profileImage: "/images/profile.jpg",
   /** Falls back to the site name if you would rather not show a location. */
   location: "Lucerne, Switzerland",
-  jobTitle: "Software Developer",
+  jobTitle: "Software Developer · DevOps & Infrastructure",
 } as const;
 
 export const socials: readonly SocialLink[] = [
