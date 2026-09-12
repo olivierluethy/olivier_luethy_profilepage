@@ -1,0 +1,62 @@
+---
+title: "PDFChef"
+slug: "pdfchef"
+summary: "A local-first, in-browser document workspace where you drag individual pages across sources into entirely new documents — and export, with no round-trips to a server."
+role: "Solo developer — architecture, domain logic, UI"
+status: "active"
+startDate: "2026-09"
+endDate: ""
+techStack: ["React 19", "TypeScript", "Vite", "Tailwind CSS v4", "Zustand", "Immer", "pdf.js", "pdf-lib", "tesseract.js", "IndexedDB"]
+interfaces: ["File System Access API", "IndexedDB"]
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/PDFChef"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Web", "PDF", "Local-first", "Open Source"]
+---
+
+PDFChef is a document workspace that runs entirely in your browser. You import
+several files, drag individual **pages** out of them into brand-new documents and
+nested folders, preview the result, and export it — with no intermediate exports
+and nothing leaving your machine. It's deliberately more than a merge/split tool:
+it behaves like a file manager for document pages.
+
+## The idea
+
+Sources are immutable. Your work is a composition layer of references to source
+pages, so the original document is never modified — you build the output you want
+by pointing at pages, not by destructively editing files. The whole loop is
+direct manipulation: select, drag, drop, preview, export. Selection works the way
+you'd expect from a real file manager — a range field (`4-49`, `1-3,50-100`),
+click/Shift/Ctrl, and marquee drag.
+
+## Architecture
+
+The codebase is strictly layered, and the layering is enforced by ESLint so
+dependencies only ever point downward:
+
+- **domain** — pure, framework-free logic: ranges, split, composition, and a
+  command/undo model. Every user action is a named command with a derived inverse,
+  which is what makes session-wide undo/redo tractable. Built with TDD.
+- **adapters** — the format layer: PDF via pdf.js and pdf-lib, plus images, text
+  and OOXML (DOCX/PPTX/XLSX), with rendering and text extraction.
+- **services** — the Zustand store, IndexedDB persistence, thumbnails, import/export,
+  and search/OCR.
+- **ui** — the React shell, workspace, preview and export views, and i18n.
+
+Text extraction runs in a worker so the main thread stays responsive.
+
+## Decisions that mattered
+
+Everything is local-first: no account, no server, no cloud database. Documents
+live in IndexedDB and never make a network request — pdf.js workers, fonts and the
+tesseract.js OCR data all ship with the app, so it works fully offline as an
+installable PWA. Annotations (text, shapes, highlights, checkmarks, signatures)
+are rendered so the preview matches the export exactly, rather than being baked in
+a separate pipeline that could drift. Direct folder export uses the File System
+Access API where it exists (Chromium), but everywhere else a full-featured ZIP
+export covers the same ground — no capability silently disappears depending on the
+browser. Pure logic is verified with Vitest; flows are checked end-to-end with
+Playwright. The UI is bilingual (English and German), English by default.

@@ -1,0 +1,65 @@
+---
+title: "Weft"
+slug: "weft"
+summary: "A local-first, self-hostable Notion alternative — nested-page block editor, real-time co-editing over Yjs, Git-style version history and a graph view, all in one command."
+role: "Solo developer — full stack, monorepo architecture"
+status: "active"
+startDate: "2026-08"
+endDate: ""
+techStack: ["React", "Vite", "TypeScript", "Tailwind CSS", "BlockNote", "Yjs", "Hocuspocus", "Fastify", "Prisma", "SQLite", "argon2"]
+interfaces: ["Openverse", "Wikimedia", "SMTP"]
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/weft"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Web", "Local-first", "Real-time", "Open Source"]
+---
+
+Weft is a self-hostable Notion alternative — a woven web of connected notes that runs
+on your own machine in one command. `pnpm dev` auto-creates the env file, sets up a
+local SQLite database and starts both the web app and the collaboration server. No
+external services, no API keys, no database server to run before you can sign up and
+start writing.
+
+## What it does
+
+- **Infinitely nested pages** in a sidebar tree with woven indent guides, subtree
+  hover highlighting, and drag-and-drop reorder and re-parent.
+- **A BlockNote block editor** (built on ProseMirror) with a slash menu — headings,
+  lists, checkboxes, tables, code with highlighting, images and embeds — plus per-page
+  icon, cover, background, lock, draggable width, live stats, and scoped custom CSS.
+- **Version history, Git-style** — snapshots on debounce, on page-leave and on demand,
+  a diff viewer highlighting additions and removals, and restore of any version.
+- **Real-time collaboration** — workspaces with owner/editor/viewer roles, email
+  invitations, public read-only share links, and co-editing with presence cursors.
+- **A network graph** of pages and their backlinks, `@page` mentions, full-text search
+  behind a ⌘K quick switcher, and export to PDF, Markdown, HTML, JSON and DOCX.
+
+## Architecture
+
+Weft is a pnpm-workspaces monorepo with a clean split:
+
+- **apps/web** — React + Vite + TypeScript + Tailwind, the client.
+- **apps/server** — Fastify + TypeScript + Prisma over SQLite, serving both the API and
+  the Yjs collaboration layer.
+- **packages/shared** — the types and zod contracts shared by both ends, so the client
+  and server can't drift apart on the wire.
+
+Real-time editing runs on **Yjs with Hocuspocus** — CRDTs mean concurrent edits merge
+without a central lock, and presence cursors ride the same channel. SQLite is the
+default so there's nothing to provision, but the Prisma schema switches to Postgres by
+changing the provider and `DATABASE_URL`, which keeps the one-command local story
+without painting self-hosters into a corner at scale.
+
+## Decisions that mattered
+
+Auth is taken seriously for something meant to be self-hosted: argon2 password hashing,
+rotating refresh tokens in httpOnly cookies, a device and session overview with
+revocation, and a full login audit log. Email is optional — set SMTP to send real
+reset and invite mails, otherwise the links print to the console and a local outbox
+file, so the dev experience never depends on an external service. Image search uses
+keyless Openverse and Wikimedia rather than a provider that needs a token. A single
+STYLEGUIDE.md is the source of truth for every colour, type and spacing decision, which
+kept the visual system coherent across a fairly large feature surface.

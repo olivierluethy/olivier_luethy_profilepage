@@ -1,0 +1,53 @@
+---
+title: "Java Todo App"
+slug: "java-todoapp"
+summary: "A full-stack todo app built to teach the backend cleanly — a Quarkus REST API over PostgreSQL via Hibernate Panache, with a vanilla-JS frontend served from the same origin."
+role: "Solo developer — full stack"
+status: "active"
+startDate: "2026-06"
+endDate: ""
+techStack: ["Java", "Quarkus", "Hibernate ORM with Panache", "PostgreSQL", "Docker", "Maven"]
+interfaces: []
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/Java-TodoApp"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Backend", "Java", "Full-stack"]
+---
+
+Java Todo App is a small full-stack todo list, but the point of it was the
+backend. I wanted a clean, honest example of the three-boxes shape every web app
+really is — browser, backend, database — with each layer doing exactly one job
+and nothing leaking across the boundaries.
+
+## The core
+
+The backend is Java on Quarkus. It exposes a REST API under `/api/todos` with
+the verbs mapped to what they actually mean: `GET` to list, `POST` to create,
+`PUT` to toggle a todo complete, `PATCH` to edit its text, and `DELETE` to
+remove it. Persistence is PostgreSQL 16 through Hibernate ORM with Panache,
+using the Active Record style so the todo entity carries its own query methods
+and the resource layer stays thin — it takes the request, calls the entity, and
+returns a result, without SQL or persistence details bleeding into the HTTP
+layer.
+
+## Architecture
+
+The browser never touches the database; it always goes through the backend, and
+the backend is the only thing that talks to Postgres. The frontend is
+deliberately plain — HTML, CSS and vanilla JavaScript — and it's served from the
+same origin as the API, which sidesteps CORS entirely and keeps the whole thing
+one deployable unit. The database runs in Docker Compose, so `docker compose up`
+plus `./mvnw quarkus:dev` is the entire setup, and Quarkus's live-reload dev
+mode means backend changes show up without a manual restart.
+
+## Why I built it
+
+This was a learning project with a teaching goal: the repo ships a
+beginner-friendly README that traces a single todo from click to saved row and
+back, so the codebase doubles as an explanation. Keeping the design clean —
+clear layers, standard REST semantics, a real relational database rather than an
+in-memory shortcut — was the whole exercise. It's the small, focused version of
+the same backend discipline I carry into larger Quarkus projects.

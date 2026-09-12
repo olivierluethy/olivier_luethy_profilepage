@@ -1,0 +1,45 @@
+---
+title: "ISS Tracker"
+slug: "iss-tracker"
+summary: "A real-time tracker that plots the International Space Station on a 3D globe, streams its live telemetry, and predicts when it will next fly over your location."
+role: "Solo developer — full stack"
+status: "active"
+startDate: "2026-06"
+endDate: ""
+techStack: ["Next.js 16", "React 19", "TypeScript", "satellite.js", "d3-geo", "topojson-client", "Tailwind CSS v4", "Framer Motion"]
+interfaces: ["TLE data", "Geocoding API"]
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/iss-tracker-web"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Web", "Space", "Data Viz"]
+---
+
+ISS Tracker follows the International Space Station in real time on a 3D globe.
+It shows where the station is right now, streams its live telemetry — altitude,
+velocity and ground-track coordinates — and works out when it will next pass
+over wherever you are.
+
+## The orbital core
+
+The interesting part isn't the map, it's the maths. The station's position comes
+from real TLE (Two-Line Element) data, which I propagate with `satellite.js` to
+compute the current sub-satellite point and ground track. Next-pass prediction
+takes any location you enter and searches forward for upcoming passes, and it
+goes a step further than "when" by working out *whether you'll actually see it* —
+a pass only counts as visible when the satellite is sunlit while your sky is
+dark, so the app checks that geometry rather than just reporting an overhead
+time.
+
+## The globe and the interface
+
+The globe is rendered with `d3-geo`, `topojson-client` and `world-atlas` land
+data, with the station and its track drawn on top. A telemetry panel keeps the
+live numbers in view, location lookup via geocoding lets you search by place
+name instead of typing coordinates, and a starfield backdrop and Framer Motion
+transitions give it a polished feel. Internal API routes (`/api/tle`,
+`/api/track`, `/api/iss`, `/api/pass`, `/api/geocode`) keep the orbital
+computation and third-party lookups server-side. It's built on Next.js 16 (App
+Router), React 19 and Tailwind CSS v4.

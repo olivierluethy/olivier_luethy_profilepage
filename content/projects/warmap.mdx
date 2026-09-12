@@ -1,0 +1,55 @@
+---
+title: "warmap"
+slug: "warmap"
+summary: "A live map of conflict and incident news — it ingests trusted RSS feeds, geolocates and classifies each event with an LLM, and plots the current picture on an interactive map with a timeline."
+role: "Solo developer — full stack"
+status: "active"
+startDate: "2026-04"
+endDate: ""
+techStack: ["Next.js 16", "React 19", "TypeScript", "Leaflet", "better-sqlite3", "Tailwind CSS v4"]
+interfaces: ["OpenAI Chat Completions API", "Nominatim (OpenStreetMap)"]
+aiModels: ["OpenAI GPT-4o mini"]
+liveUrl: "https://warmap-blush.vercel.app"
+githubUrl: "https://github.com/olivierluethy/warmap"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Web", "AI", "Data Viz", "Maps"]
+---
+
+warmap turns a stream of news headlines into a live map. It pulls from a curated
+set of trusted RSS feeds — BBC World, Reuters, Al Jazeera, The Guardian and more —
+works out *what* happened and *where*, classifies each event, and plots it on an
+interactive Leaflet map with a filterable timeline and per-incident detail that
+links back to the original sources.
+
+## The pipeline
+
+Each incoming item goes through an LLM extraction step that decides whether it's
+actually a conflict or incident event, then assigns an event type — airstrike,
+missile, drone, shelling, ground, naval, casualties, diplomacy, cyber,
+humanitarian — a severity score and a short brief, and pulls out the locations
+and any movement vectors. I run this against OpenAI's Chat Completions API
+(defaulting to `gpt-4o-mini`), with a bounded pool of concurrent extraction jobs
+in the background fetcher so a burst of news doesn't overwhelm the model or the
+rate limits.
+
+## Getting the geography right
+
+Turning "an airstrike near X" into a map pin is the hard part. Place names
+resolve first through a local gazetteer, then fall back to Nominatim
+(OpenStreetMap), and I reject country-sized hits when the text clearly means a
+city or a base — otherwise half the map ends up as a pin in the middle of a
+nation. Geocoding is throttled to roughly one request per second to respect the
+public Nominatim policy, and results are cached behind a version prefix so I can
+invalidate stale caching rules cleanly.
+
+## Staying current without re-spamming the model
+
+Events live in a local SQLite database via `better-sqlite3`, which caches both
+the LLM extractions and the geocodes and persists the event list so a restart
+re-hydrates from disk instead of re-processing every feed. New events are pushed
+to the browser over a Server-Sent Events stream (`/api/events/stream`), so the
+map stays live without a refresh. On top of that it's a proper installable PWA
+with a service worker, plus a Markdown-backed blog, sitemap and SEO — the whole
+thing is Next.js 16 (App Router), React 19 and Tailwind CSS v4.

@@ -1,0 +1,61 @@
+---
+title: "Where's Walter?"
+slug: "wheres-walter"
+summary: "A procedurally generated hidden-object game — find Walter, mid-wave, in a crowd of hundreds, solo or in a real-time multiplayer race."
+role: "Solo developer — full stack, game engine"
+status: "active"
+startDate: "2026-06"
+endDate: ""
+techStack: ["TypeScript", "React", "Node", "Express", "Socket.IO", "SQLite", "Vite", "Tailwind CSS", "Vitest"]
+interfaces: []
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/wheres-walter"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Web", "Game", "Real-time"]
+---
+
+Where's Walter? is a procedurally generated hidden-object game: find Walter — a
+yellow-and-blue striped sweater, green pompom beanie and a raised, waving arm —
+hidden in a crowd of hundreds. You can play solo on an endless supply of fresh
+maps, create and share custom challenges, or race friends in real-time
+multiplayer. Every character and background is original, procedurally generated
+SVG built from primitive shapes — no copied or licensed art anywhere.
+
+## The engine
+
+A scene is **fully determined** by its settings: `{ seed, theme, mapSize,
+difficulty }`. The same settings always produce a pixel-identical crowd, which
+is what lets the client and server agree without shipping the whole scene over
+the wire. It's a TypeScript monorepo (npm workspaces) with a `@walter/shared`
+package holding the seeded generator, RNG, hit detection, hint/score logic and
+SVG renderer — imported by **both** client and server so maps render identically
+on each side.
+
+## The part I'm proudest of: exclusivity by construction
+
+The hard problem in a find-Walter game is guaranteeing he's actually findable
+and that no decoy is accidentally indistinguishable from him. Rather than
+generate crowds and reject bad ones, I build every decoy to *provably* satisfy a
+set of invariants: no decoy ever waves, none wears Walter's yellow+blue stripe
+combo, none shares more than one of his four signature attributes, and none
+renders at his 1.15× scale. These are enforced by construction, with a single
+source of truth (`sharedAttributeCount()`), and verified by an invariant test
+over 50 randomized scenes. A separate `decoyTrickiness` knob clusters
+one-attribute near-misses around Walter to tune difficulty without ever
+loosening the invariants.
+
+## Multiplayer and anti-cheat
+
+The server is Node + Express + Socket.IO with SQLite (`better-sqlite3`) for
+persistence. In multiplayer, all clients get the same seed but the **server
+holds the authoritative Walter positions and resolves claims** — first claimer
+wins by server timestamp, wrong clicks earn a 2-second lockout, and timing is
+owned server-side so results can't be faked by editing the client clock.
+Challenges apply the same principle: coordinates are never returned by the
+metadata endpoint, Walter is delivered as an opaque pre-rendered SVG fragment,
+and every click is validated server-side. A hidden-object game can't be truly
+zero-knowledge — the target has to be drawn to be found — but the server stays
+the sole source of truth for every result.

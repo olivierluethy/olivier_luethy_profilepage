@@ -1,0 +1,53 @@
+---
+title: "Scanvice"
+slug: "scanvice"
+summary: "An AI receipt and invoice scanner — upload a photo of a bill and Claude vision returns clean, structured JSON with vendor, totals, line items and per-field confidence, exportable to XLSX."
+role: "Solo developer — full stack"
+status: "active"
+startDate: "2026-04"
+endDate: ""
+techStack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "shadcn/ui", "SheetJS (xlsx)", "Recharts", "Framer Motion"]
+interfaces: ["Anthropic API"]
+aiModels: ["Anthropic Claude"]
+liveUrl: "https://v0-scan-vice-landing-page.vercel.app"
+githubUrl: "https://github.com/olivierluethy/scanvice"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Web", "AI", "OCR"]
+---
+
+Scanvice is a landing site and an AI-powered receipt and invoice scanner. You
+upload a photo of a receipt, invoice or bill, and the app hands it to Anthropic's
+Claude vision model to read it and return clean, structured JSON — vendor,
+transaction details, totals and an amount breakdown, itemised line items, a
+category guess and a per-field confidence score — which is then rendered in the
+UI and can be exported to XLSX.
+
+## The extraction endpoint
+
+The heart of it is `POST /api/extract-receipt`, which runs on the Node.js
+runtime. It sends the uploaded image to Claude (`claude-sonnet-4-5`) via the
+Messages API together with a strict extraction prompt, and the model returns
+JSON only. That JSON is parsed into a typed `ExtractedReceipt` schema before it
+ever reaches the client, so the frontend always renders against a known shape.
+Low-quality images still extract — they just come back with lowered confidence
+scores and warnings rather than failing outright.
+
+## Guardrails around the model
+
+Because the endpoint accepts arbitrary user uploads and calls a paid API, the
+server side is defensive: per-IP rate limiting, image MIME-type and size
+validation (10 MB max), a request timeout, and metadata-only logging — the
+receipt content itself is never retained. Without an `ANTHROPIC_API_KEY` the
+endpoint returns a clear `server_misconfigured` error instead of failing
+silently.
+
+## Around the scanner
+
+The results view renders a vendor card, a line-items table, an amount breakdown
+and confidence indicators, with one-click export to XLSX via SheetJS. The rest
+is a proper marketing site — hero, problem/solution, trust and CTA sections plus
+an MDX-style blog — with SEO built in through `sitemap.ts`, `robots.ts` and a
+dynamic OG icon. It's Next.js 16 (App Router), React 19, Tailwind CSS v4 and
+shadcn/ui on Radix primitives.
