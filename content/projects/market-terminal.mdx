@@ -1,0 +1,67 @@
+---
+title: "Market Terminal"
+slug: "market-terminal"
+summary: "A keyboard-first, Bloomberg-style market terminal — cross-asset quotes, charts, a FIFO portfolio and a ⌘K command palette, with every number tagged live, simulated or cached."
+role: "Solo developer — architecture, data layer, UI"
+status: "active"
+startDate: "2026-07"
+endDate: ""
+techStack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "TanStack Query v5", "Zustand", "TradingView Lightweight Charts", "Recharts", "Framer Motion"]
+interfaces: ["CoinGecko", "Twelve Data", "Finnhub", "FRED", "NewsAPI"]
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/Bloomberg"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Web", "Finance", "Data Viz"]
+---
+
+This is an independent build — an homage to the Bloomberg Terminal, not affiliated
+with or endorsed by Bloomberg L.P. I wanted to see how much of a dense,
+keyboard-first market workspace I could put together from free data sources: cross-
+asset quotes, charting with indicators, an asset-detail workspace, a virtual
+portfolio with real cost-basis maths, a macro dashboard and calendars, all behind a
+⌘K command palette.
+
+## What's real, and what's simulated
+
+The first thing I designed was honesty about data, because a terminal that lies
+about its numbers is worse than no terminal. Every value carries a provenance tag —
+**LIVE**, **SIM**, or **CACHE** — next to the panel it came from. Crypto quotes and
+OHLC come from CoinGecko (no key needed, so crypto is live out of the box); stocks,
+ETFs, indices and FX from Twelve Data; quotes, profiles and news from Finnhub; macro
+series and the yield curve from FRED; headlines from NewsAPI. With no keys at all the
+app runs entirely on simulated data and every panel says so.
+
+The simulator isn't random noise — it holds its invariants: bid below ask, the
+52-week range brackets the last price, ownership sums to 100%, each macro series sits
+at its real-world level, no IPO prices on a Saturday. Plausible-looking nonsense is
+the failure mode that actually costs trust, so those invariants are pinned by tests.
+
+## Architecture
+
+The data flow is a single line, and I held to it strictly:
+
+```
+Component → hook (TanStack Query) → RoutingProvider → adapter → (on failure) → Mock
+```
+
+No component calls `fetch()` or the mock generator directly — everything goes through
+the data hooks, so swapping a source never touches a component. A missing or rate-
+limited provider falls back to the simulator automatically and the tag flips to SIM.
+Server state lives in TanStack Query; local truth (watchlists, the portfolio ledger,
+layout) lives in Zustand and persists to localStorage. API keys never reach the
+browser — adapters run server-side behind a single `/api/data/[method]` endpoint.
+
+## The portfolio
+
+The portfolio maths is real regardless of whether the instruments are live or
+simulated. Positions are replayed from a transaction ledger through FIFO lots, and
+every P&L figure derives from that. The tests are chosen to discriminate rather than
+merely pass — FIFO returns 1500 where average cost would say 1000. Beyond unit tests
+on the pure layers, every phase was driven end-to-end in headless Chrome, which is
+what caught the things types couldn't: a chart rendering with zero height, a
+container collapsed by its flex parent, a stale query surviving a reopened palette.
+It's dark-only by design, but the text ramp is measured against WCAG AA and charts
+never encode meaning in colour alone.

@@ -1,0 +1,53 @@
+---
+title: "Photo Swiper"
+slug: "photo-swiper"
+summary: "A Flutter app for iOS and Android that cleans up your camera roll one swipe at a time — keep or delete, then confirm before anything is gone."
+role: "Solo developer — Flutter app, monetization, analytics"
+status: "active"
+startDate: "2026-04"
+endDate: ""
+techStack: ["Flutter", "Dart", "photo_manager", "video_player", "shared_preferences"]
+interfaces: ["RevenueCat", "PostHog"]
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/Photo-Swiper"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Mobile", "Flutter"]
+---
+
+Photo Swiper is a Flutter app for iOS and Android that turns clearing out your
+camera roll into something you can actually finish. You swipe through your
+photos and videos one at a time — right to keep, left to delete — and nothing is
+touched until you review a summary and confirm. It's the mobile, Flutter
+implementation of the swipe-to-clean idea.
+
+## What it does
+
+The heart of the app is a swipe deck. Each card is a photo or a video, and every
+decision is provisional: deletions are queued, not applied, so you can blast
+through hundreds of items quickly and still get a final look before committing.
+A grid selection view and a review screen sit between "swipe" and "gone," which
+is the safety net that makes the whole thing feel usable rather than
+terrifying. Videos aren't just thumbnails — they play inline so you can judge a
+clip before deciding.
+
+## The build
+
+The app reads the device's media library through `photo_manager` and asks for
+photo-library and notification permissions at runtime via `permission_handler`,
+which is the part that has to behave correctly on both iOS and Android. Video
+previews use `video_player`, sharing goes through `share_plus`, and lightweight
+local state — onboarding progress, preferences — lives in `shared_preferences`.
+The onboarding flow itself is a sequence of intro, benefits and permission
+screens, with `flutter_animate` handling the motion.
+
+## Monetization and feedback
+
+Premium features sit behind a paywall wired up with RevenueCat
+(`purchases_flutter`), which handles in-app purchases and subscription state
+across both stores so I don't have to reimplement receipt validation per
+platform. Trial reminders go out through `flutter_local_notifications`, product
+analytics run on PostHog, and there's an in-app review prompt to catch happy
+users at the right moment. It's released under the MIT license.

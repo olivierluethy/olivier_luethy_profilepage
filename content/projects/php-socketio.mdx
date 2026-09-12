@@ -1,0 +1,58 @@
+---
+title: "PHP-native Real-time Backend"
+slug: "php-socketio"
+summary: "A Socket.IO alternative that runs on plain PHP + MySQL — authoritative shared state, delta sync and presence with no Node process or WebSocket daemon."
+role: "Solo developer — architecture, PHP core, JS client"
+status: "active"
+startDate: "2026-08"
+endDate: ""
+techStack: ["PHP", "MySQL", "Redis", "JavaScript", "PSR-4", "Server-Sent Events"]
+interfaces: ["HMAC tokens"]
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/PHP_Socket.io"
+linkedinPostUrl: ""
+coverImage: ""
+featured: false
+tags: ["Backend", "Real-time", "PHP", "Open Source"]
+---
+
+This is a PHP-native replacement for a Node.js/Socket.IO real-time layer. It
+gives you shared authoritative state, event fan-out, presence and live viewer
+counts, roles and permissions — all delivered over ordinary HTTP on standard
+PHP + MySQL hosting, with **no persistent Node process and no WebSocket
+daemon**. I built it to retire the Socket.IO VPS behind TuneVote, but the module
+is app-agnostic and reusable.
+
+## Why build this at all
+
+Socket.IO is lovely until you have to host it. A WebSocket daemon needs a
+long-lived process, which rules out most shared and cPanel-style hosting and
+turns into a VPS you have to babysit. The interesting constraint here was: can I
+get the same developer experience — `socket.on(...)` / `socket.emit(...)` — on
+nothing but PHP-FPM and a MySQL database? Migration is deliberately mechanical:
+`socket.on` becomes `client.on`, `socket.emit` becomes `client.emit`, and rooms
+become sessions.
+
+## The core
+
+Each session owns one authoritative JSON snapshot plus a monotonic `version` and
+an append-only event log. Late joiners get the snapshot; everyone else pulls
+deltas. The part I care most about is correctness under concurrency: every
+mutation is serialised per session with a `GET_LOCK` + `SELECT … FOR UPDATE` and
+an optimistic version check, so there are no lost updates even when two writers
+race. Clients keep a `since` cursor and receive events over SSE, long-poll
+(holding the request up to ~25 s) or short-poll fallback; if a client falls
+behind the retained window, it gets a fresh snapshot to resync instead of a
+broken stream.
+
+## Architecture
+
+The module is PSR-4 (`Realtime\`) and cleanly layered: an HTTP kernel with CORS,
+a session service, an action registry with server-side permissions, transports
+(long-poll and SSE) and a pluggable storage driver — MySQL by default, Redis as
+an optional scale-out path behind the same interface. Presence is heartbeat +
+TTL, counted on read. Auth is server-authoritative with HMAC-signed tokens, plus
+rate limiting. The JS client handles the transport negotiation, reconnects and
+snapshot-on-gap resync so callers just subscribe to events. It ships with
+integration tests covering sync, presence and rate limiting.
