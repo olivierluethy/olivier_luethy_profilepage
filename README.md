@@ -1,4 +1,17 @@
-# Portfolio site
+<div align="center">
+  <img src="src/app/apple-icon.png" alt="Olivier Lüthy portfolio logo" width="96" />
+  <h1>Portfolio Site</h1>
+  <p><b>A personal portfolio built with Next.js and MDX.</b><br/>Projects and blog posts are plain MDX files — adding one is a matter of dropping in a file.</p>
+  <p>
+    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+    <img alt="Next.js" src="https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white">
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white">
+    <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white">
+    <img alt="MDX" src="https://img.shields.io/badge/MDX-1B1F24?logo=mdx&logoColor=white">
+  </p>
+</div>
+
+---
 
 A personal portfolio built with Next.js (App Router), TypeScript, Tailwind CSS
 v4, Framer Motion and MDX. Projects and blog posts are plain MDX files in
@@ -210,3 +223,12 @@ Note that the live-preview embed on project pages probes each `liveUrl` for
 `X-Frame-Options` and CSP `frame-ancestors` **at build time**. A build without
 network access simply falls back to the cover image and a "Try it" button,
 which is the safe outcome rather than an error.
+
+## License
+
+Released under the [MIT License](LICENSE) © 2026 Olivier Lüthy. You're free to use, modify and distribute this
+software, including commercially, as long as the copyright notice and license are included.
+
+## Author
+
+Built by **Olivier Lüthy** — [GitHub](https://github.com/olivierluethy).
