@@ -18,7 +18,9 @@ export function personSchema(): Record<string, unknown> {
     url: absoluteUrl("/"),
     jobTitle: site.jobTitle,
     description: site.description,
-    email: `mailto:${site.email}`,
+    // The email is deliberately omitted from structured data — it is the single
+    // most reliable field for scrapers to harvest. Contact runs through the form
+    // at /contact instead.
     image: absoluteUrl(site.profileImage),
     ...(sameAs.length > 0 ? { sameAs } : {}),
   };

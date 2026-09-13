@@ -1,7 +1,7 @@
 import { Reticle } from "@/components/reticle";
 import { ActionLink } from "@/components/ui/action-link";
 import { Reveal } from "@/components/ui/reveal";
-import { site, socials } from "@/lib/site";
+import { socials } from "@/lib/site";
 
 /**
  * Closing call to action. The page's one loud moment, and the only place the
@@ -55,7 +55,6 @@ export function ContactCta() {
               <ActionLink href="/contact" variant="primary">
                 Contact me
               </ActionLink>
-              <ActionLink href={`mailto:${site.email}`}>{site.email}</ActionLink>
               <ActionLink href={linkedin.href} external>
                 LinkedIn
               </ActionLink>

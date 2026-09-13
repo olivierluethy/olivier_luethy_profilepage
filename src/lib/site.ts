@@ -38,7 +38,10 @@ export const site = {
   /** No trailing slash. Drives canonical URLs, sitemap and OG images. */
   url: "https://olivierluethy.com",
   locale: "en_US",
-  email: "olivier.luethy@gmx.net",
+  // No email here on purpose: this object is imported by client components, so
+  // any address would ship (readable) in the bundle. The contact form relays
+  // mail server-side via CONTACT_TO_EMAIL (see /api/contact), and the
+  // click-to-reveal fallback uses the Base64 value in lib/contact-address.ts.
   /**
    * Asset paths resolve to real files so nothing renders broken.
    * Overwrite the files in /public rather than changing these paths:

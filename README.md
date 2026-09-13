@@ -224,6 +224,38 @@ Note that the live-preview embed on project pages probes each `liveUrl` for
 network access simply falls back to the cover image and a "Try it" button,
 which is the safe outcome rather than an error.
 
+## Contact form
+
+The contact page uses a bot-resistant form instead of a plaintext address: the
+email never appears in the HTML or the JSON-LD. Messages are relayed by a Next.js
+Route Handler (`src/app/api/contact/route.ts`) that verifies a Cloudflare
+Turnstile token and a honeypot before sending via [Resend](https://resend.com).
+A click-to-reveal fallback exposes the address only after a human click.
+
+Set these environment variables (see `.env.example`) — in `.env.local` for local
+development and in your host's dashboard (e.g. Vercel → Settings → Environment
+Variables) for production:
+
+| Variable | Where | Purpose |
+| --- | --- | --- |
+| `RESEND_API_KEY` | server | Resend API key |
+| `CONTACT_FROM_EMAIL` | server | Verified sender, e.g. `contact@yourdomain.com` |
+| `CONTACT_TO_EMAIL` | server | Inbox that receives messages |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | client | Turnstile site key |
+| `TURNSTILE_SECRET_KEY` | server | Turnstile secret key |
+
+Setup steps:
+
+1. **Resend** — create an account, add and verify your sending domain (DNS
+   records), then create an API key. Set `CONTACT_FROM_EMAIL` to an address on
+   the verified domain and `CONTACT_TO_EMAIL` to where you want to read messages.
+2. **Cloudflare Turnstile** — create a widget for your domain to get the site and
+   secret keys.
+3. Add all five variables to your host and redeploy.
+
+For local development you can use Cloudflare's always-passing test keys (see the
+bottom of `.env.example`).
+
 ## License
 
 Released under the [MIT License](LICENSE) © 2026 Olivier Lüthy. You're free to use, modify and distribute this
