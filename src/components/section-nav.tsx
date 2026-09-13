@@ -93,7 +93,7 @@ export function SectionNav() {
       {/* Mobile and tablet: sticky strip below the main nav */}
       <nav
         aria-label="Page sections"
-        className="sticky top-nav z-40 border-b border-line bg-ground/85 backdrop-blur-md rail:hidden"
+        className="sticky top-nav z-40 overflow-x-clip border-b border-line bg-ground/85 backdrop-blur-md rail:hidden"
       >
         <div
           ref={stripRef}
