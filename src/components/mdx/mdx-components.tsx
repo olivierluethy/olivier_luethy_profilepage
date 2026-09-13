@@ -42,12 +42,14 @@ function Heading4({ className, ...props }: ComponentPropsWithoutRef<"h4">) {
 }
 
 function Paragraph(props: ComponentPropsWithoutRef<"p">) {
-  return <p className="mt-5 leading-[1.75] text-muted text-pretty" {...props} />;
+  return (
+    <p className="mt-5 leading-[1.75] text-muted text-pretty break-words" {...props} />
+  );
 }
 
 function Anchor({ href = "", ...props }: ComponentPropsWithoutRef<"a">) {
   const styles =
-    "font-medium text-text underline decoration-signal decoration-2 underline-offset-[3px] transition-colors hover:text-signal-ink";
+    "font-medium text-text underline decoration-signal decoration-2 underline-offset-[3px] transition-colors hover:text-signal-ink break-words";
 
   if (href.startsWith("/")) {
     return <Link href={href} className={styles} {...props} />;
@@ -147,7 +149,7 @@ function Code({ className, ...props }: CodeProps) {
 
   return (
     <code
-      className={`rounded border border-line bg-panel px-1.5 py-0.5 font-mono text-[0.875em] text-signal-ink ${className ?? ""}`}
+      className={`rounded border border-line bg-panel px-1.5 py-0.5 font-mono text-[0.875em] text-signal-ink break-words ${className ?? ""}`}
       {...props}
     />
   );
