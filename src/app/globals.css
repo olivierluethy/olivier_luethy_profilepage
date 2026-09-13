@@ -122,6 +122,12 @@
     font-family: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /*
+     * Long unbreakable tokens (URLs, hashes, package names in prose) must wrap
+     * rather than push the layout wider than the phone viewport. This is the
+     * global safety net; individual prose elements add `break-words` too.
+     */
+    overflow-wrap: break-word;
   }
 
   ::selection {
