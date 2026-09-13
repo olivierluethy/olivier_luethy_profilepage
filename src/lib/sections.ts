@@ -1,31 +1,33 @@
 /**
  * The homepage sections, in scroll order.
  *
- * Each carries a short callsign used by the jump-nav rail — an OSD channel
- * label rather than a decorative number. The list is the single source of
- * truth for both the rail and the scroll-spy, so adding a section here wires
- * it into the navigation automatically.
+ * Each carries a plain-language `short` label (shown in the jump-nav, paired
+ * with an icon in `section-nav`) and a fuller `label` used for accessible
+ * names. The list is the single source of truth for both the rail and the
+ * scroll-spy, so adding a section here wires it into the navigation
+ * automatically. Section ids double as the icon keys in `section-icons`.
  */
 
 export interface HomeSection {
-  /** DOM id of the section element; also the jump-link target. */
+  /** DOM id of the section element; also the jump-link target and icon key. */
   id: string;
-  /** Short uppercase label shown in the nav rail. */
-  callsign: string;
-  /** Full label, used for accessible names and the mobile strip. */
+  /** Plain-language label shown in the nav (with an icon beside it). */
+  short: string;
+  /** Full label, used for accessible names. */
   label: string;
 }
 
 export const homeSections: readonly HomeSection[] = [
-  { id: "top", callsign: "Home", label: "Home" },
-  { id: "work", callsign: "Feat", label: "Featured work" },
-  { id: "stack", callsign: "Stack", label: "Tech stack" },
-  { id: "projects", callsign: "All", label: "All projects" },
-  { id: "path", callsign: "Path", label: "Experience" },
-  { id: "hackathons", callsign: "Hack", label: "Hackathons" },
-  { id: "maker", callsign: "Make", label: "Maker & hardware" },
-  { id: "sports", callsign: "Run", label: "Sports" },
-  { id: "community", callsign: "Vol", label: "Community" },
-  { id: "writing", callsign: "Log", label: "Writing" },
-  { id: "contact", callsign: "Link", label: "Contact" },
+  { id: "top", short: "Home", label: "Home" },
+  { id: "work", short: "Work", label: "Featured work" },
+  { id: "stack", short: "Stack", label: "Tech stack" },
+  { id: "projects", short: "Projects", label: "All projects" },
+  { id: "path", short: "Experience", label: "Experience" },
+  { id: "hackathons", short: "Hackathons", label: "Hackathons" },
+  { id: "maker", short: "Maker", label: "Maker & hardware" },
+  { id: "photography", short: "Photos", label: "Photography" },
+  { id: "sports", short: "Sports", label: "Sports" },
+  { id: "community", short: "Community", label: "Community" },
+  { id: "writing", short: "Writing", label: "Writing" },
+  { id: "contact", short: "Contact", label: "Contact" },
 ] as const;

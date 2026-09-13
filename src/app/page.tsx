@@ -11,6 +11,7 @@ import { Hackathons } from "@/components/sections/hackathons";
 import { Hero } from "@/components/sections/hero";
 import { LatestPosts } from "@/components/sections/latest-posts";
 import { Maker } from "@/components/sections/maker";
+import { Photography } from "@/components/sections/photography";
 import { Sports } from "@/components/sections/sports";
 import { TechStack } from "@/components/sections/tech-stack";
 import { buildMetadata } from "@/lib/metadata";
@@ -44,6 +45,7 @@ export default function Home() {
       <Experience />
       <Hackathons />
       <Maker />
+      <Photography />
       <Sports />
       <Community />
       <LatestPosts />
