@@ -32,7 +32,7 @@ export function TechGrid({ heading, tech }: { heading: string; tech: TechIcon[] 
               >
                 <path d={item.path} fill="currentColor" />
               </svg>
-              <span className="text-center font-mono text-hud uppercase leading-tight">
+              <span className="w-full break-words text-center font-mono text-hud uppercase leading-tight hyphens-auto">
                 {item.name}
               </span>
             </button>

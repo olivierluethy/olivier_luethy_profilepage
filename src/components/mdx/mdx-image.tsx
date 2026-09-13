@@ -57,7 +57,7 @@ export function MdxImage({ src, alt, width, height, caption }: MdxImageProps) {
           width={width}
           height={height}
           sizes="95vw"
-          className="h-auto max-h-[92vh] w-auto rounded-lg object-contain"
+          className="h-auto max-h-[92vh] w-auto max-w-full rounded-lg object-contain"
         />
       </dialog>
     </figure>

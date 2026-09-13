@@ -18,28 +18,28 @@ export function Sports() {
       lede={sportsProfile.summary}
       className="bg-panel/40"
     >
-      <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
+      <div className="grid gap-8 [&>*]:min-w-0 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
         <Reveal>
-          <div className="overflow-hidden rounded-xl border border-line">
+          <div className="overflow-x-auto rounded-xl border border-line">
             <table className="w-full border-collapse text-left">
               <caption className="sr-only">Race results</caption>
               <thead>
                 <tr>
                   <th
                     scope="col"
-                    className="border-b border-line bg-panel px-4 py-3 font-mono text-hud uppercase text-muted"
+                    className="border-b border-line bg-panel px-3 py-3 font-mono text-hud uppercase text-muted sm:px-4"
                   >
                     Event
                   </th>
                   <th
                     scope="col"
-                    className="border-b border-line bg-panel px-4 py-3 font-mono text-hud uppercase text-muted"
+                    className="border-b border-line bg-panel px-3 py-3 font-mono text-hud uppercase text-muted sm:px-4"
                   >
                     Distance
                   </th>
                   <th
                     scope="col"
-                    className="border-b border-line bg-panel px-4 py-3 text-right font-mono text-hud uppercase text-muted"
+                    className="border-b border-line bg-panel px-3 py-3 text-right font-mono text-hud uppercase text-muted sm:px-4"
                   >
                     Time
                   </th>
@@ -48,16 +48,16 @@ export function Sports() {
               <tbody>
                 {races.map((race) => (
                   <tr key={race.id} className="border-b border-line last:border-0">
-                    <td className="px-4 py-4 align-top">
+                    <td className="px-3 py-4 align-top sm:px-4">
                       <span className="block font-medium">{race.event}</span>
                       <span className="mt-1 block font-mono text-hud uppercase text-faint">
                         {race.date} · {race.note}
                       </span>
                     </td>
-                    <td className="px-4 py-4 align-top font-mono text-sm text-muted">
+                    <td className="px-3 py-4 align-top font-mono text-sm text-muted sm:px-4">
                       {race.distance}
                     </td>
-                    <td className="px-4 py-4 text-right align-top font-mono text-sm text-signal-ink">
+                    <td className="px-3 py-4 text-right align-top font-mono text-sm text-signal-ink sm:px-4">
                       {race.time}
                     </td>
                   </tr>
@@ -73,7 +73,7 @@ export function Sports() {
               {sportsProfile.embedHtml ? (
                 /* Strava / DataSport embed, pasted into sportsProfile.embedHtml. */
                 <div
-                  className="size-full"
+                  className="size-full [&_iframe]:!max-w-full [&_iframe]:!w-full [&_img]:!max-w-full"
                   dangerouslySetInnerHTML={{ __html: sportsProfile.embedHtml }}
                 />
               ) : (
