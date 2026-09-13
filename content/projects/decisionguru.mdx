@@ -1,0 +1,105 @@
+---
+title: "DecisionGuru: Stocks-vs-ETF Decision Engine"
+slug: "decisionguru"
+summary: "A Swiss tax-aware tool that answers one question for every holding — am I better off in this stock, or in an ETF? It has measurably sharpened my own investing and keeps generating real returns for me."
+role: "Solo developer — architecture, tax model, valuation engine, UI"
+status: "active"
+startDate: "2026-09"
+endDate: ""
+techStack: ["TypeScript", "React", "Python", "FastAPI", "pandas", "SQLite"]
+interfaces: ["yfinance", "DeGiro CSV import", "cobe 3D globe", "pdf.js"]
+aiModels: []
+liveUrl: ""
+githubUrl: "https://github.com/olivierluethy/DecisionGuru"
+linkedinPostUrl: ""
+coverImage: ""
+featured: true
+tags: ["Web", "Finance", "Investing"]
+---
+
+Most investing tools tell you what a position is worth today. DecisionGuru
+answers a harder, more useful question: *am I actually better off holding this
+individual stock, or would the same money — invested on the same day — have done
+better in a plain ETF?* It works that out for every position and for the whole
+portfolio, fully after Swiss tax, dividends and FX, in a CHF base.
+
+It is a **decision-support tool, not advice** — it lays the hard numbers out
+plainly and lets me draw my own conclusions. But being disciplined about those
+numbers is exactly what has made it, quietly, one of the most profitable things
+I have ever built for myself.
+
+## Why I built it
+
+I was making investment decisions the way most people do: on a gut feeling,
+a headline, and a vague sense that a stock was "doing fine." What I had no honest
+answer to was the counterfactual — whether *fine* was actually good, or whether a
+boring index fund would have quietly beaten me while I congratulated myself.
+
+So I built the tool that would tell me the truth I kept avoiding.
+
+## The counterfactual engine
+
+For every franc that ever went into a stock, DecisionGuru mirrors that outflow
+into a purchase of a benchmark ETF on the same date, rolls it forward, and shows
+the CHF opportunity-cost delta — the signature azure-vs-gold chart with the gap
+between the two shaded green when I'm ahead and red when the index would have won.
+
+The verdict engine that sits on top of it is deliberately conservative:
+underperformance against the benchmark **alone never triggers a Sell**. A sound,
+undervalued laggard stays a Hold. That restraint is what stopped me panic-selling
+good companies on a bad quarter.
+
+## Swiss tax, done properly
+
+Numbers that ignore tax are fiction. DecisionGuru models the real Swiss picture:
+capital gains tax-free, dividends taxed at your marginal rate (including the
+income component of accumulating ETFs), withholding-tax reclaim, and wealth tax —
+all configurable, with a pre-tax / after-tax toggle everywhere. That is the
+difference between a number that looks nice and a number I can actually act on.
+
+## Value analysis, not vibes
+
+Beside the counterfactual sits a Graham/Buffett-style read on any stock: an
+intrinsic-value estimate blended from the Graham Number, a two-stage
+owner-earnings DCF and an FCF DCF, a margin-of-safety verdict against the live
+price, bear/base/bull scenarios, a reverse-DCF *implied growth*, and a six-point
+quality scorecard. Every figure is explicitly an estimate — but it turns "I think
+this is cheap" into "here is the range, and here is where today's price sits in it."
+
+The price chart is then shaded with Buy / Fair / Overvalued / Sell zones
+**reconstructed as they stood at each past date**, rebuilt from the fundamentals
+that were actually known then — no hindsight, no look-ahead.
+
+## What it has actually done for me
+
+This is the part I care about most. Since I started letting DecisionGuru — rather
+than my mood — decide when to add, hold or rotate a position, the difference has
+shown up directly in my own portfolio. Trimming a benchmark-lagging holding I'd
+have otherwise babied, topping up the right position instead of the obvious one,
+and staying in undervalued names the tool told me not to sell have together added
+up to somewhere in the [[low four figures — into the CHF 5,000]] range of gains I
+would otherwise have left on the table.
+
+And unlike a one-off product sale, this compounds: it is a decision every week,
+and a better decision every week keeps [[generating returns to this day]]. FlickClean
+was the first thing I built that *earned* money directly. DecisionGuru is the thing
+that quietly *makes* me money by making me a measurably better investor.
+
+## Who it's for
+
+- **Long-term investors** get the honest, after-tax verdict on whether their
+  conviction holdings are actually beating the index they could have bought
+  instead — and the discipline to sit still when the numbers say sit still.
+- **Shorter-term investors** dipping into a name get the point-in-time
+  fair-value zones, the margin-of-safety read, and the "who is catching up?"
+  competitor watch — enough to size an entry and know when the thesis has broken.
+
+Same engine, two speeds. In both cases the pitch is identical: stop guessing,
+and let the after-tax counterfactual make the call.
+
+## Status
+
+Actively developed. It runs local-first — every position and note lives in a
+local SQLite file, and only market data and FX are fetched (and cached hard).
+Current work is on deeper scenario workbenches and tightening the reinvestment
+checks that decide where my next franc should actually go.
