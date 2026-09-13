@@ -1,20 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
+import { SectionIcon } from "@/components/section-icons";
 import { homeSections } from "@/lib/sections";
 
 /**
  * Homepage jump navigation — the site's signature element.
  *
- * On desktop it is a fixed OSD channel rail on the right edge; on smaller
- * screens it becomes a sticky horizontal strip under the main nav. Both are
- * driven by one scroll-spy and both are plain anchors, so a jump always lands
- * immediately regardless of what is animating on the way past.
+ * On desktop it is a fixed labelled rail on the right edge; on smaller screens
+ * it is a sticky panel below the main nav that WRAPS so every section is
+ * visible at once (no horizontal scrolling, nothing hidden off-screen). Both
+ * are driven by one scroll-spy and both are plain anchors + icons, so a jump
+ * always lands immediately regardless of what is animating on the way past.
  */
 export function SectionNav() {
   const [active, setActive] = useState<string>(homeSections[0].id);
-  const stripRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // A thin band across the upper-middle of the viewport. Whichever section
@@ -35,27 +36,14 @@ export function SectionNav() {
     return () => observer.disconnect();
   }, []);
 
-  // Keep the active chip visible in the mobile strip.
-  useEffect(() => {
-    const strip = stripRef.current;
-    if (!strip) return;
-
-    const chip = strip.querySelector<HTMLAnchorElement>(`[data-chip="${active}"]`);
-    if (!chip) return;
-
-    const offset =
-      chip.offsetLeft - strip.clientWidth / 2 + chip.clientWidth / 2;
-    strip.scrollTo({ left: Math.max(0, offset), behavior: "smooth" });
-  }, [active]);
-
   return (
     <>
-      {/* Desktop: fixed channel rail */}
+      {/* Desktop: fixed labelled rail on the right edge */}
       <nav
         aria-label="Page sections"
-        className="pointer-events-none fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 rail:block"
+        className="pointer-events-none fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 rail:block"
       >
-        <ul className="pointer-events-auto flex flex-col items-end gap-1">
+        <ul className="pointer-events-auto flex flex-col gap-0.5 rounded-2xl border border-line bg-ground/70 p-1.5 backdrop-blur-md">
           {homeSections.map((section) => {
             const isActive = section.id === active;
             return (
@@ -63,25 +51,21 @@ export function SectionNav() {
                 <a
                   href={`#${section.id}`}
                   aria-current={isActive ? "true" : undefined}
-                  className="group flex items-center justify-end gap-2.5 py-1.5 pl-4"
+                  className={`group flex items-center gap-2.5 rounded-full py-1.5 pl-2.5 pr-3.5 transition-colors ${
+                    isActive
+                      ? "bg-signal-wash text-signal-ink"
+                      : "text-faint hover:text-muted"
+                  }`}
                 >
-                  <span
-                    className={`font-mono text-hud uppercase transition-colors ${
-                      isActive
-                        ? "text-signal-ink"
-                        : "text-faint group-hover:text-muted"
-                    }`}
-                  >
-                    {section.callsign}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className={`h-px transition-all duration-300 ${
-                      isActive
-                        ? "w-7 bg-signal"
-                        : "w-3.5 bg-line-strong group-hover:w-5"
+                  <SectionIcon
+                    id={section.id}
+                    className={`size-4 shrink-0 transition-colors ${
+                      isActive ? "text-signal-ink" : "text-line-strong group-hover:text-muted"
                     }`}
                   />
+                  <span className="font-mono text-hud uppercase">
+                    {section.short}
+                  </span>
                   <span className="sr-only">{section.label}</span>
                 </a>
               </li>
@@ -90,35 +74,33 @@ export function SectionNav() {
         </ul>
       </nav>
 
-      {/* Mobile and tablet: sticky strip below the main nav */}
+      {/* Mobile and tablet: sticky panel that wraps — all sections visible */}
       <nav
         aria-label="Page sections"
-        className="sticky top-nav z-40 overflow-x-clip border-b border-line bg-ground/85 backdrop-blur-md rail:hidden"
+        className="sticky top-nav z-40 border-b border-line bg-ground/90 backdrop-blur-md rail:hidden"
       >
-        <div
-          ref={stripRef}
-          className="flex gap-1 overflow-x-auto px-4 py-2.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
+        <ul className="mx-auto flex max-w-6xl flex-wrap justify-center gap-1.5 px-3 py-2.5">
           {homeSections.map((section) => {
             const isActive = section.id === active;
             return (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                data-chip={section.id}
-                aria-current={isActive ? "true" : undefined}
-                className={`shrink-0 rounded-full border px-3 py-1.5 font-mono text-hud uppercase transition-colors ${
-                  isActive
-                    ? "border-signal bg-signal text-[#0B0F14]"
-                    : "border-line bg-panel text-muted"
-                }`}
-              >
-                {section.callsign}
-                <span className="sr-only"> — {section.label}</span>
-              </a>
+              <li key={section.id}>
+                <a
+                  href={`#${section.id}`}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 font-mono text-hud uppercase transition-colors ${
+                    isActive
+                      ? "border-signal bg-signal text-[#0B0F14]"
+                      : "border-line bg-panel text-muted"
+                  }`}
+                >
+                  <SectionIcon id={section.id} className="size-3.5 shrink-0" />
+                  {section.short}
+                  <span className="sr-only"> — {section.label}</span>
+                </a>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </nav>
     </>
   );
