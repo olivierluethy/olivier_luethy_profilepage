@@ -55,12 +55,12 @@ export function SiteFooter() {
                   </li>
                 ))}
                 <li>
-                  <a
-                    href={`mailto:${site.email}`}
+                  <Link
+                    href="/contact"
                     className="text-sm text-muted transition-colors hover:text-signal-ink"
                   >
                     Email
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
