@@ -13,6 +13,10 @@ const SORTS: { key: SortKey; label: string }[] = [
   { key: "active", label: "Currently active" },
 ];
 
+// How many chips a chapter shows before the long tail hides behind "Show all",
+// so a narrow screen never gets a wall of ~150 pills.
+const DEFAULT_VISIBLE = 8;
+
 export interface ProjectExplorerProps {
   projects: ProjectSummary[];
   tags: string[];
@@ -32,6 +36,46 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
   // Filters open collapsed so 31 projects are the first thing on screen, not a
   // wall of pills. Expanded on demand.
   const [filtersOpen, setFiltersOpen] = useState(false);
+  // Each chapter starts curated (top chips only); "Show all" reveals the rest.
+  const [tagsAll, setTagsAll] = useState(false);
+  const [techAll, setTechAll] = useState(false);
+
+  // Usage frequency across all projects, so the most useful filters lead each
+  // chapter instead of a flat alphabetical dump.
+  const counts = useMemo(() => {
+    const tag = new Map<string, number>();
+    const tch = new Map<string, number>();
+    for (const project of projects) {
+      for (const value of project.frontmatter.tags)
+        tag.set(value, (tag.get(value) ?? 0) + 1);
+      for (const value of project.frontmatter.techStack)
+        tch.set(value, (tch.get(value) ?? 0) + 1);
+    }
+    return { tag, tch };
+  }, [projects]);
+
+  const sortedTags = useMemo(
+    () =>
+      [...tags].sort(
+        (a, b) =>
+          (counts.tag.get(b) ?? 0) - (counts.tag.get(a) ?? 0) ||
+          a.localeCompare(b),
+      ),
+    [tags, counts],
+  );
+
+  const sortedTech = useMemo(
+    () =>
+      [...tech].sort(
+        (a, b) =>
+          (counts.tch.get(b.name) ?? 0) - (counts.tch.get(a.name) ?? 0) ||
+          a.name.localeCompare(b.name),
+      ),
+    [tech, counts],
+  );
+
+  const visibleTags = tagsAll ? sortedTags : sortedTags.slice(0, DEFAULT_VISIBLE);
+  const visibleTech = techAll ? sortedTech : sortedTech.slice(0, DEFAULT_VISIBLE);
 
   // The tech grid higher up the page filters this list by dispatching an event,
   // then we scroll the list into view so the result is visible immediately.
@@ -76,6 +120,9 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
         : "border-line bg-panel text-muted hover:border-signal/50 hover:text-signal-ink"
     }`;
 
+  const moreClass =
+    "inline-flex items-center rounded-full border border-dashed border-line px-3 py-1.5 font-mono text-hud uppercase text-faint transition-colors hover:border-signal/50 hover:text-signal-ink";
+
   const chip = (value: string) => {
     const active = filter === value;
     return (
@@ -87,6 +134,12 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
         className={chipClass(active)}
       >
         {value}
+        <span
+          aria-hidden="true"
+          className={active ? "text-[#0B0F14]/55" : "text-faint"}
+        >
+          {counts.tag.get(value) ?? 0}
+        </span>
       </button>
     );
   };
@@ -110,6 +163,12 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
           <path d={icon.path} fill="currentColor" />
         </svg>
         {icon.name}
+        <span
+          aria-hidden="true"
+          className={active ? "text-[#0B0F14]/55" : "text-faint"}
+        >
+          {counts.tch.get(icon.name) ?? 0}
+        </span>
       </button>
     );
   };
@@ -195,24 +254,53 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
           </div>
         </div>
 
-        {/* Expanded filter panel — collapsed by default. */}
+        {/* Expanded filter panel — collapsed by default. Split into chapters,
+            each curated to its most-used chips with the tail behind "Show all". */}
         {filtersOpen && hasFilters ? (
-          <div id="project-filters" className="flex flex-col gap-3 pt-1">
+          <div id="project-filters" className="flex flex-col gap-4 pt-1">
             {tags.length > 0 ? (
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="mr-1 font-mono text-hud uppercase text-faint">
+              <div className="flex flex-col gap-2">
+                <span className="font-mono text-hud uppercase text-faint">
                   Tags
                 </span>
-                {tags.map(chip)}
+                <div className="flex flex-wrap items-center gap-2">
+                  {visibleTags.map(chip)}
+                  {sortedTags.length > DEFAULT_VISIBLE ? (
+                    <button
+                      type="button"
+                      onClick={() => setTagsAll((open) => !open)}
+                      aria-expanded={tagsAll}
+                      className={moreClass}
+                    >
+                      {tagsAll
+                        ? "Show less"
+                        : `Show all (+${sortedTags.length - DEFAULT_VISIBLE})`}
+                    </button>
+                  ) : null}
+                </div>
               </div>
             ) : null}
 
             {tech.length > 0 ? (
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="mr-1 font-mono text-hud uppercase text-faint">
+              <div className="flex flex-col gap-2">
+                <span className="font-mono text-hud uppercase text-faint">
                   Tech
                 </span>
-                {tech.map(techChip)}
+                <div className="flex flex-wrap items-center gap-2">
+                  {visibleTech.map(techChip)}
+                  {sortedTech.length > DEFAULT_VISIBLE ? (
+                    <button
+                      type="button"
+                      onClick={() => setTechAll((open) => !open)}
+                      aria-expanded={techAll}
+                      className={moreClass}
+                    >
+                      {techAll
+                        ? "Show less"
+                        : `Show all (+${sortedTech.length - DEFAULT_VISIBLE})`}
+                    </button>
+                  ) : null}
+                </div>
               </div>
             ) : null}
           </div>
@@ -221,7 +309,7 @@ export function ProjectExplorer({ projects, tags, tech }: ProjectExplorerProps) 
 
       <div
         aria-live="polite"
-        className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3"
       >
         {visible.map((project) => (
           <ProjectCard
