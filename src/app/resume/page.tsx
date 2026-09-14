@@ -23,7 +23,7 @@ export const metadata: Metadata = buildMetadata({
  */
 export default function ResumePage() {
   return (
-    <div className="mx-auto max-w-5xl px-5 py-16 sm:px-8 sm:py-20">
+    <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-20">
       <header>
         <p className="flex items-center gap-2.5 font-mono text-hud uppercase text-signal-ink">
           <Reticle className="size-4" />
@@ -32,13 +32,18 @@ export default function ResumePage() {
         <h1 className="mt-5 text-balance font-display text-display-lg font-bold">
           Read it here — no download required
         </h1>
-        <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-muted">
+        <p className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:mt-5 sm:text-lg">
           The full CV is below. Look it over in the browser, grab the PDF if you
           want your own copy, or forward it straight to whoever needs to see it.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <ActionLink href={RESUME_URL} variant="primary" download>
+          <ActionLink
+            href={RESUME_URL}
+            variant="primary"
+            download
+            className="w-full sm:w-auto"
+          >
             Download PDF
           </ActionLink>
           <ActionLink href={RESUME_URL} external>
@@ -48,7 +53,7 @@ export default function ResumePage() {
         </div>
       </header>
 
-      <section aria-label="Résumé preview" className="mt-12">
+      <section aria-label="Résumé preview" className="mt-10 sm:mt-12">
         {/* Top rail — OSD readout, echoing the hero. */}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-line pb-4 font-mono text-hud uppercase text-faint">
           <span className="flex items-center gap-2 text-signal-ink">

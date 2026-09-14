@@ -28,7 +28,7 @@ export function TechStack() {
       title="Tech I build with"
       lede="Every logo here is something I've shipped a real project with. Tap one to see which."
     >
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6 sm:gap-8">
         {groups.map((group) => (
           <TechGrid key={group.category} heading={group.category} tech={group.icons} />
         ))}
