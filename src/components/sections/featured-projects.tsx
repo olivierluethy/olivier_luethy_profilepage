@@ -29,8 +29,10 @@ export function FeaturedProjects() {
       </div>
 
       <Reveal delay={0.2}>
-        <div className="mt-10">
-          <ActionLink href="/#projects">See every project</ActionLink>
+        <div className="mt-8 sm:mt-10">
+          <ActionLink href="/#projects" className="w-full sm:w-auto">
+            See every project
+          </ActionLink>
         </div>
       </Reveal>
     </Section>
