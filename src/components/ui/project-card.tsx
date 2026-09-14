@@ -31,30 +31,37 @@ export function ProjectCard({
   const href = `/projects/${frontmatter.slug}`;
 
   if (variant === "grid") {
+    // Only projects with a real cover get a preview band. Everyone else stays a
+    // compact text tile — no blown-up logo, no initials placeholder. The small
+    // favicon by the title already carries the brand, so it shows exactly once.
+    const hasCover = Boolean(frontmatter.coverImage);
+
     return (
       <Link
         href={href}
         className="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-panel transition-all duration-300 hover:-translate-y-1 hover:border-signal/50 hover:shadow-panel"
       >
-        <div className="relative aspect-video overflow-hidden border-b border-line">
-          <CoverArt
-            coverImage={frontmatter.coverImage}
-            favicon={frontmatter.favicon}
-            title={frontmatter.title}
-            sizes="(min-width: 1024px) 360px, (min-width: 768px) 45vw, 100vw"
-          />
-          <Reticle className="absolute right-3 top-3 size-4 text-signal opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        </div>
+        {hasCover ? (
+          <div className="relative aspect-video overflow-hidden border-b border-line">
+            <CoverArt
+              coverImage={frontmatter.coverImage}
+              favicon={frontmatter.favicon}
+              title={frontmatter.title}
+              sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 50vw"
+            />
+            <Reticle className="absolute right-3 top-3 size-4 text-signal opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          </div>
+        ) : null}
 
-        <div className="flex flex-1 flex-col p-4">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-1 flex-col p-3 sm:p-4">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <StatusPill status={frontmatter.status} />
             <span className="font-mono text-hud uppercase text-faint">
               {dateRange}
             </span>
           </div>
 
-          <div className="mt-2.5 flex items-center gap-2">
+          <div className="mt-2 flex items-center gap-2 sm:mt-2.5">
             {frontmatter.favicon ? (
               <Image
                 src={frontmatter.favicon}
@@ -65,7 +72,7 @@ export function ProjectCard({
                 className="size-[18px] shrink-0 rounded"
               />
             ) : null}
-            <h3 className="text-balance font-display text-base font-semibold leading-tight transition-colors group-hover:text-signal-ink">
+            <h3 className="text-balance font-display text-sm font-semibold leading-tight transition-colors group-hover:text-signal-ink sm:text-base">
               {frontmatter.title}
             </h3>
           </div>
