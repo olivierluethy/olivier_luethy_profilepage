@@ -92,7 +92,7 @@ export function Hero() {
         </div>
 
         {/* Bottom rail — telemetry, not a stat block. */}
-        <dl className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:mt-16 sm:grid-cols-3">
+        <dl className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:mt-16 sm:grid-cols-3">
           {heroStats.map((stat) => (
             <div key={stat.label} className="bg-panel px-5 py-4">
               <dt className="font-mono text-hud uppercase text-faint">

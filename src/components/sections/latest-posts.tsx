@@ -41,7 +41,7 @@ export function LatestPosts() {
             <Reveal delay={index * 0.08} className="h-full">
               <Link
                 href={`/blog/${post.frontmatter.slug}`}
-                className="group flex h-full flex-col p-6 transition-colors hover:bg-panel-raised"
+                className="group flex h-full flex-col p-5 transition-colors hover:bg-panel-raised sm:p-6"
               >
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-hud uppercase text-faint">
                   <time dateTime={post.frontmatter.date}>
@@ -69,8 +69,10 @@ export function LatestPosts() {
       </ul>
 
       <Reveal delay={0.2}>
-        <div className="mt-10">
-          <ActionLink href="/blog">Read the blog</ActionLink>
+        <div className="mt-8 sm:mt-10">
+          <ActionLink href="/blog" className="w-full sm:w-auto">
+            Read the blog
+          </ActionLink>
         </div>
       </Reveal>
     </Section>
