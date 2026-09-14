@@ -27,7 +27,7 @@ export function Hackathons() {
       lede="Hackathons are the closest thing to a stress test for how I work with people I have never met."
       className="bg-panel/40"
     >
-      <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
         {hackathons.map((event, index) => (
           <li key={event.id}>
             <Reveal delay={index * 0.08} className="h-full">

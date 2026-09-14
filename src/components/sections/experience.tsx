@@ -20,7 +20,7 @@ export function Experience() {
     >
       <ol className="relative border-l border-line pl-6 sm:pl-10">
         {timeline.map((entry, index) => (
-          <li key={entry.id} className="relative pb-12 last:pb-0">
+          <li key={entry.id} className="relative pb-10 last:pb-0 sm:pb-12">
             <Reveal delay={index * 0.06}>
               {/* Marker sits on the rule itself. */}
               <span

@@ -8,8 +8,8 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-auto border-t border-line bg-panel">
-      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
-        <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
+      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-12">
+        <div className="flex flex-col gap-8 sm:flex-row sm:justify-between sm:gap-10">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
               <Reticle className="size-4 text-signal" />
@@ -20,7 +20,7 @@ export function SiteFooter() {
             </p>
           </div>
 
-          <div className="flex gap-12">
+          <div className="flex gap-8 sm:gap-12">
             <nav aria-label="Footer">
               <h2 className="font-mono text-hud uppercase text-faint">Site</h2>
               <ul className="mt-4 space-y-2.5">
@@ -68,7 +68,7 @@ export function SiteFooter() {
         </div>
 
         {/* Status bar — the OSD readout that closes every page. */}
-        <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line pt-6 font-mono text-hud uppercase text-faint">
+        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line pt-6 font-mono text-hud uppercase text-faint sm:mt-12">
           <span>&copy; {year}</span>
           <span>{site.location}</span>
           <span className="ml-auto flex items-center gap-2">

@@ -15,7 +15,7 @@ export function Community() {
         {community.map((entry, index) => (
           <li key={entry.id} className="bg-panel">
             <Reveal delay={index * 0.06} className="h-full">
-              <article className="flex h-full flex-col p-6">
+              <article className="flex h-full flex-col p-5 sm:p-6">
                 <p className="font-mono text-hud uppercase text-signal-ink">
                   {entry.period}
                 </p>
